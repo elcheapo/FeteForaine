@@ -1,4 +1,5 @@
 #include <FastLED.h>
+#include <MD_YX5300.h>
 
 // How many leds in your strip?
 #define NUM_LEDS 288

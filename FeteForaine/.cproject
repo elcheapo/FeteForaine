@@ -25,33 +25,25 @@
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.239157887" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/cores/arduino"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/variants/mega"/>
-									<listOptionValue builtIn="false" value="${HOME}/git/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Bridge/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Esplora/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Ethernet/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/GSM/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Keyboard/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/LiquidCrystal/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Mouse/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/RobotIRremote/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Control/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Motor/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SD/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Servo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SpacebrewYun/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Stepper/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/TFT/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Temboo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/WiFi/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/tool-unity"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.922107295" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
@@ -68,33 +60,25 @@
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1096940598" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/cores/arduino"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/variants/mega"/>
-									<listOptionValue builtIn="false" value="${HOME}/git/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Bridge/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Esplora/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Ethernet/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/GSM/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Keyboard/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/LiquidCrystal/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Mouse/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/RobotIRremote/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Control/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Motor/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SD/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Servo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SpacebrewYun/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Stepper/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/TFT/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Temboo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/WiFi/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/tool-unity"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.1198905600" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">
@@ -111,33 +95,25 @@
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.41298875" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/cores/arduino"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/variants/mega"/>
-									<listOptionValue builtIn="false" value="${HOME}/git/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/FastLED"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/MD_YX5300/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/dcc_timer/src"/>
+									<listOptionValue builtIn="false" value="${HOME}/git/repository/FeteForaine/FeteForaine/lib/ssd1306/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/EEPROM/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/HID/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SPI/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/SoftwareSerial/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/__cores__/arduino/Wire/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Adafruit_CircuitPlayground/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Bridge/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Esplora/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Ethernet/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Firmata/utility"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/GSM/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Keyboard/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/LiquidCrystal/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Mouse/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/RobotIRremote/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Control/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Robot_Motor/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SD/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Servo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/SpacebrewYun/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Stepper/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/TFT/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/Temboo/src"/>
-									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/framework-arduinoavr/libraries/WiFi/src"/>
 									<listOptionValue builtIn="false" value="${HOME}/.platformio/packages/tool-unity"/>
 								</option>
 								<option id="org.eclipse.cdt.build.core.settings.holder.symbols.884639970" name="Symbols" superClass="org.eclipse.cdt.build.core.settings.holder.symbols" valueType="definedSymbols">

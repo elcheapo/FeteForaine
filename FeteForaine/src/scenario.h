@@ -11,14 +11,15 @@
 
 class scenario {
 public:
-	scenario(const uint8_t * _actions);
+	scenario(uint32_t (*_action)(void));
 	virtual ~scenario();
 
 	void run();
+	void enable(void);
+	void disable(void);
+	boolean enabled;
 	uint32_t delay_time;
-	bool active;
-	const uint8_t * actions; // Start of the scenario string
-	const uint8_t * pc;
+	uint32_t (*action)(void); // returns delay
 };
 
 #endif /* SRC_SCENARIO_H_ */

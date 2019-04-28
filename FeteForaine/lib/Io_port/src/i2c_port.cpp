@@ -19,7 +19,7 @@ I2c_Port::I2c_Port(uint8_t _i2c_address) {
 	input_mask =0;
 	time_stamp = 0;
 	modified = 0;
-	disabled = 1;
+	disabled = 0;
 }
 
 void I2c_Port::write_i2c (void) {
@@ -48,6 +48,10 @@ void I2c_Port::read_i2c (void) {
 	}
 	time_stamp = millis();
 	read_value = temp;
+#ifdef DEBUG
+	Serial.print(F("Read ="));
+	Serial.println(read_value,16);
+#endif
 }
 
 void I2c_Port::set_input_i2c(void) {
@@ -56,7 +60,7 @@ void I2c_Port::set_input_i2c(void) {
 	Wire.beginTransmission(i2c_address); // transmit to PCF8574
 	Wire.write(input_mask);
 	ret = Wire.endTransmission();
-#ifndef DEBUG
+#ifdef DEBUG
 	Serial.print(F("IM 0x"));
 	Serial.println(input_mask,16);
 #endif

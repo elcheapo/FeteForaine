@@ -65,7 +65,7 @@ void DCC_timer::begin(void){
 
 		*tccrb = 0<<WGM13	| 1 << WGM12
 				| (1<<CS12) | (0<<CS11) | (0<<CS10);	//  prescaler / 256, source=16 MHz / 256 = 244 Hz
-		*timsk = 1<<OCIE1A; 				// OCRA timer interrupt for adc measurement
+//		*timsk = 1<<OCIE1A; 				// OCRA timer interrupt for adc measurement
 		*ocra = 10;
 		*ocrb = 0;
 		*ocrc = 0;

@@ -8,6 +8,46 @@
 #ifndef SRC_HELPERS_H_
 #define SRC_HELPERS_H_
 
+// I2C helpers
+void I2C_digitalWrite(uint8_t pin, uint8_t value){
+	uint8_t port = pin / 10;
+	uint8_t pin_mask = pin % 10;
+	if (value == HIGH){
+		i2c_ports[port].set_mask(1<<pin_mask);
+	} else {
+		i2c_ports[port].clear_mask(1<<pin_mask);
+	}
+}
+uint8_t I2C_digitalRead(uint8_t pin){
+	uint8_t port = pin / 10;
+	uint8_t pin_mask = pin % 10;
+	uint8_t data = i2c_ports[port].read();
+#if 0
+	Serial.print(F("I2C digital Read :"));
+	Serial.print(port,16);
+	Serial.print(F(" / "));
+	Serial.print(pin_mask,16);
+	Serial.print(F(" / "));
+	Serial.print(data,16);
+#endif
+	data &= (1<<pin_mask);
+#if 0
+	Serial.print(F(" / "));
+	Serial.println(data,16);
+#endif
+	if (data != 0) return HIGH; else return LOW;
+}
+void I2C_pinMode(uint8_t pin, uint8_t mode){
+	uint8_t port = pin / 10;
+	uint8_t pin_mask = pin % 10;
+	if (mode != OUTPUT) {
+		i2c_ports[port].set_input(1<<pin_mask);
+	}
+}
+
+/************************************************************************************************/
+// Scenario for string 1
+
 void up1_led( uint8_t start) {
 	uint8_t i;
 	for( i=0; i< NUM_LEDS1; i++) {
@@ -110,7 +150,6 @@ void up2_led( uint8_t start) {
 
 uint32_t update_led2(void) {
 	uint8_t i;
-	Serial.print('2');
 	switch (led2_cycle) {
 	case 0:
 		for (i=0; i<NUM_LEDS2; i++) {
@@ -135,42 +174,97 @@ return 0;
 
 scenario led_string2(&update_led2);
 
+/*********************************************************************************/
 
-void I2C_digitalWrite(uint8_t pin, uint8_t value){
-	uint8_t port = pin / 10;
-	uint8_t pin_mask = pin % 10;
-	if (value == HIGH){
-		i2c_ports[port].set_mask(1<<pin_mask);
-	} else {
-		i2c_ports[port].clear_mask(1<<pin_mask);
+void up3_led( uint8_t start) {
+	uint8_t i;
+	for( i=0; i<NUM_LEDS3 ; i++) {
+		leds3[i] = CRGB::Black;
 	}
+	leds3[start] = CRGB::Red;
+	if (start < 83)
+		leds3[(start+1) % 85] = CRGB::Green;
+	if (start < 82)
+		leds3[(start+2) % 85] = CRGB::Blue;
 }
-uint8_t I2C_digitalRead(uint8_t pin){
-	uint8_t port = pin / 10;
-	uint8_t pin_mask = pin % 10;
-	uint8_t data = i2c_ports[port].read();
-#if 0
-	Serial.print(F("I2C digital Read :"));
-	Serial.print(port,16);
-	Serial.print(F(" / "));
-	Serial.print(pin_mask,16);
-	Serial.print(F(" / "));
-	Serial.print(data,16);
-#endif
-	data &= (1<<pin_mask);
-#if 0
-	Serial.print(F(" / "));
-	Serial.println(data,16);
-#endif
-	if (data != 0) return HIGH; else return LOW;
-}
-void I2C_pinMode(uint8_t pin, uint8_t mode){
-	uint8_t port = pin / 10;
-	uint8_t pin_mask = pin % 10;
-	if (mode != OUTPUT) {
-		i2c_ports[port].set_input(1<<pin_mask);
+
+uint32_t update_led3(void) {
+	uint8_t i;
+	switch (led3_cycle) {
+	case 0:
+		for (i=0; i<NUM_LEDS3; i++) {
+			leds3[i] = CRGB::Black;
+		}
+		led3_cycle=1;
+		return 300;
+		break;
+	case 85:
+		up3_led(NUM_LEDS3-1);
+		led3_cycle = 1;
+		return 300;
+		break;
+	default:
+		up3_led(led3_cycle-1);
+		led3_cycle++;
+		return 300;
+		break;
 	}
+return 0;
 }
+
+scenario led_string3(&update_led3);
+
+/*********************************************************************************/
+// Handling of the train
+
+uint16_t speed;
+
+uint32_t train(void) {
+//	Serial.print('T');
+	switch (train_cycle) {
+	case 0:
+		speed = 0;
+		timer3.begin();
+		timer3.analog_set_speed_and_direction(speed,off);
+		train_cycle=1;
+		return 200;
+		break;
+	case 1:
+		if (I2C_digitalRead(10) == LOW) {
+			// button pressed, start the train
+			Serial.print('S');
+			speed = 200;
+			timer3.analog_set_speed_and_direction(speed, forward);
+			Serial.println(F("Train starts"));
+			return 3000; // give it time to get out of detection zone
+		}
+		if (I2C_digitalRead(11) == LOW) {
+			// button pressed, faster
+			Serial.print('+');
+			speed += 10;
+			timer3.analog_set_speed_and_direction(speed, forward);
+		}
+		if (I2C_digitalRead(12) == LOW) {
+			// button pressed, slower
+			Serial.print('-');
+			speed -= 10;
+			timer3.analog_set_speed_and_direction(speed, forward);
+		}
+		// If train goes in front of station, stop
+		if (digitalRead(CURRENT_DETECT) == LOW) {
+			train_cycle = 0;
+			return 0;
+		}
+		return 200;
+		break;
+	default:
+		return 200;
+		break;
+	}
+return 0;
+}
+
+scenario train_control(&train);
 
 
 void cbResponse(const MD_YX5300::cbData *status)
@@ -205,7 +299,7 @@ void cbResponse(const MD_YX5300::cbData *status)
   }
 
   Serial.print(F(", 0x"));
-  Serial.print(status->data, HEX);
+  Serial.println(status->data, HEX);
 }
 
 

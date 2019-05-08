@@ -11,10 +11,12 @@
 
 //#include "sova.h"
 
+
+#define CURRENT_DETECT 41
 // How many leds in your strip?
 #define NUM_LEDS1 144
 #define NUM_LEDS2 12
-#define NUM_LEDS3 1
+#define NUM_LEDS3 85
 #define NUM_LEDS4 1
 #define NUM_LEDS5 1
 #define NUM_LEDS6 1
@@ -51,6 +53,7 @@ CRGB leds6[NUM_LEDS6];
 CRGB leds7[NUM_LEDS7];
 
 uint32_t current_time;
+uint8_t train_cycle;
 uint8_t led1_cycle;
 uint8_t led2_cycle;
 uint8_t led3_cycle;
@@ -66,6 +69,15 @@ uint8_t current_color;
 
 void setup() { 
 	uint8_t i,ret;
+	Wire.begin();
+	// Turn Off Relays
+	Wire.beginTransmission(0x20); // transmit to PCF8574
+	Wire.write(0x00); // make sure we are not changing "input" pins
+	Wire.endTransmission();
+
+	pinMode(CURRENT_DETECT, INPUT);           // set pin to input for current detector
+	digitalWrite(CURRENT_DETECT, HIGH);       // turn on pullup resistors
+
 	Serial.begin(230400);
 	timer3.end();
 	// MP3 init
@@ -74,7 +86,6 @@ void setup() {
 	setSynchMode(bUseSynch);
 
 	Serial.println(F("\nScanning I2C bus"));
-	Wire.begin();
 	for (i=1; i<127; i++) {
 		// scan I2C bus
 		Wire.beginTransmission(i); // transmit to PCF8574
@@ -85,6 +96,8 @@ void setup() {
 		}
 	}
 	Serial.println(F("Done"));
+
+
 
 	// LCD Init
 	/* Select the font to use with menu and all font functions */
@@ -102,20 +115,37 @@ void setup() {
     delay(1000);
 
     // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-    FastLED.addLeds<WS2812B, DATA_PIN1, RGB>(leds1, NUM_LEDS1);
+    FastLED.addLeds<WS2812B, DATA_PIN1, GRB>(leds1, NUM_LEDS1);
     FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds2, NUM_LEDS2);
-    FastLED.addLeds<WS2812B, DATA_PIN3, RGB>(leds3, NUM_LEDS3);
+    FastLED.addLeds<WS2812B, DATA_PIN3, GRB>(leds3, NUM_LEDS3);
     FastLED.addLeds<WS2812B, DATA_PIN4, RGB>(leds4, NUM_LEDS4);
     FastLED.addLeds<WS2812B, DATA_PIN5, RGB>(leds5, NUM_LEDS5);
     FastLED.addLeds<WS2812B, DATA_PIN6, RGB>(leds6, NUM_LEDS6);
     FastLED.addLeds<WS2812B, DATA_PIN7, RGB>(leds7, NUM_LEDS7);
 
+    leds1[0] = CRGB::Red;
+    leds1[1] = CRGB::Green;
+    leds1[2] = CRGB::Blue;
+    leds2[0] = CRGB::Red;
+    leds2[1] = CRGB::Green;
+    leds2[2] = CRGB::Blue;
+    leds3[0] = CRGB::Red;
+    leds3[1] = CRGB::Green;
+    leds3[2] = CRGB::Blue;
+ 	FastLED.show();
+
+    delay(2000);
+
     for( uint16_t i=0; i<NUM_LEDS1; i++) {
     	leds1[i] = CRGB::Black;
     }
  	for( uint16_t i=0; i<NUM_LEDS2; i++) {
-  	  leds2[i] = CRGB::FairyLight;
+  	  leds2[i] = CRGB::Black;
   	}
+    for( uint16_t i=0; i<NUM_LEDS3; i++) {
+    	leds3[i] = CRGB::Black;
+    }
+
  	FastLED.show();
 
  	current_color = 0;
@@ -126,6 +156,7 @@ void setup() {
  	 	I2C_pinMode(20+i, INPUT);
   	}
  	current_time=0;
+ 	train_cycle = 0;
  	led1_cycle = 0;
  	led2_cycle = 0;
  	led3_cycle = 0;
@@ -136,26 +167,21 @@ void setup() {
  	led8_cycle = 0;
  	led_string1.enable();
  	led_string2.enable();
+ 	led_string3.enable();
+ 	train_control.enable();
 
  	for (uint8_t hue=0; hue < 255; hue++) {
- 		FastLED.showColor(CHSV(hue, 255, 100));
- 		delay(100);
+ 		FastLED.showColor(CHSV(hue, 255, 180));
+ 		delay(10);
  	}
- 	for (uint8_t sat=0; sat < 255; sat++) {
- 		FastLED.showColor(CHSV(0, sat, 100));
- 		delay(100);
- 	}
- 	for (uint8_t bri=0; bri < 255; bri++) {
- 		FastLED.showColor(CHSV(0, 255, bri));
- 		delay(100);
- 	}
+ 	delay (1000);
 
 }
 
 
 void loop() { 
 	uint16_t i;
-	delay(500);
+	delay(20);
 //	Serial.println('L');
 	/* All the background processing */
 	current_time = millis();
@@ -173,20 +199,21 @@ void loop() {
 	/* end of "background tasks */
 	led_string1.run();
 	led_string2.run();
+	led_string3.run();
+	train_control.run();
 
 	for (i=0; i<5; i++) {
 		if (I2C_digitalRead(10+i) == 0) {
 			Serial.print(F("Button "));
 			Serial.println(10+i);
-			I2C_digitalWrite(i, HIGH);
-		} else {
-			I2C_digitalWrite(i, LOW);
+			mp3.playTrackRepeat(i+6);
 		}
 
 		if (I2C_digitalRead(20+i) == 0) {
 			Serial.print(F("Button "));
 			Serial.println(20+i);
 			I2C_digitalWrite(i+5, HIGH);
+			mp3.playTrackRepeat(i+1);
 		} else {
 			I2C_digitalWrite(i+5, LOW);
 		}

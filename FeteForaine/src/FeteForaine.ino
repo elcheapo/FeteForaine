@@ -16,12 +16,16 @@
 // How many leds in your strip?
 #define NUM_LEDS1 144
 #define NUM_LEDS2 12
-#define NUM_LEDS3 85
+#define NUM_LEDS3 57
 #define NUM_LEDS4 1
 #define NUM_LEDS5 1
 #define NUM_LEDS6 1
 #define NUM_LEDS7 1
 
+#define FET1 45
+#define FET2 44
+#define FET3 43
+#define FET4 42
 
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
@@ -174,6 +178,16 @@ void setup() {
  		FastLED.showColor(CHSV(hue, 255, 180));
  		delay(10);
  	}
+ 	/* Turn on FET */
+ 	pinMode(FET1,OUTPUT);
+ 	pinMode(FET2,OUTPUT);
+ 	pinMode(FET3,OUTPUT);
+ 	pinMode(FET4,OUTPUT);
+ 	digitalWrite(FET1, LOW);
+ 	digitalWrite(FET2, HIGH);
+ 	digitalWrite(FET3, LOW);
+ 	digitalWrite(FET4, HIGH);
+
  	delay (1000);
 
 }

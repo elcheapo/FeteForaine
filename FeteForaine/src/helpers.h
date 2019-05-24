@@ -49,16 +49,32 @@ void I2C_pinMode(uint8_t pin, uint8_t mode){
 // Scenario for string 1
 
 void up1_led( uint8_t start) {
+	uint8_t i,j,k;
+	for( i=0; i< NUM_LEDS1/12; i++) {
+		for (j=0; j<12; j++) {
+			if (i == start) {
+				leds1[i*12+j] = CHSV(37,212,255);
+			} else {
+				k = abs( i - start);
+				leds1[i*12+j] = CHSV(37,255 - (k*15),255);
+			}
+
+		}
+	}
+}
+
+#if 0
+void up1_led( uint8_t start) {
 	uint8_t i;
 	for( i=0; i< NUM_LEDS1; i++) {
-		leds1[i] = CRGB::FairyLight;
+		leds1[i] = CRGB::FairyLight; //HSV = 52,83,100
 	}
 	for( i=start; i<start + 12;  i++) {
 		leds1[i] = CRGB::Orange;
 	}
 
 }
-
+#endif
 uint32_t update_led1(void) {
 	uint8_t i;
 	switch (led1_cycle) {
@@ -67,71 +83,19 @@ uint32_t update_led1(void) {
 			leds1[i] = CRGB::Black;
 		}
 		led1_cycle=1;
-		return 500;
-		break;
-	case 1:
-		up1_led(0);
-		led1_cycle++;
-		return 500;
-		break;
-	case 2:
-		up1_led(12);
-		led1_cycle++;
-		return 500;
-		break;
-	case 3:
-		up1_led(24);
-		led1_cycle++;
-		return 500;
-		break;
-	case 4:
-		up1_led(36);
-		led1_cycle++;
-		return 500;
-		break;
-	case 5:
-		up1_led(48);
-		led1_cycle++;
-		return 500;
-		break;
-	case 6:
-		up1_led(60);
-		led1_cycle++;
-		return 500;
-		break;
-	case 7:
-		up1_led(72);
-		led1_cycle++;
-		return 500;
-		break;
-	case 8:
-		up1_led(84);
-		led1_cycle++;
-		return 500;
-		break;
-	case 9:
-		up1_led(96);
-		led1_cycle++;
-		return 500;
-		break;
-	case 10:
-		up1_led(108);
-		led1_cycle++;
-		return 500;
-		break;
-	case 11:
-		up1_led(120);
-		led1_cycle = 3;
-		return 500;
+		return 1000;
 		break;
 	case 12:
-		up1_led(132);
+		up1_led(12);
 		led1_cycle = 1;
-		return 500;
+		return 200;
 		break;
 	default:
-		led1_cycle=0;
-		return 0;
+		up1_led(led1_cycle - 1);
+		led1_cycle ++;
+		return 200;
+		break;
+
 	}
 return 0;
 }
@@ -198,7 +162,7 @@ uint32_t update_led3(void) {
 		led3_cycle=1;
 		return 300;
 		break;
-	case 85:
+	case NUM_LEDS3:
 		up3_led(NUM_LEDS3-1);
 		led3_cycle = 1;
 		return 300;

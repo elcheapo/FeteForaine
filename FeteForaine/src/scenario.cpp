@@ -9,9 +9,10 @@
 #include "scenario.h"
 #include "actions.h"
 
-scenario::scenario(uint32_t (*_action)(void)) {
+scenario::scenario(uint32_t (*_action)(uint8_t &)) {
 	enabled = false;
 	delay_time = 0;
+	cycle = 0;
 	action = _action;
 }
 
@@ -20,11 +21,14 @@ scenario::~scenario() {
 }
 
 void scenario::enable() {
+	cycle = 0;
 	enabled = true;
 }
 
 void scenario::disable() {
-	enabled = true;
+	cycle = 0;
+	run();
+	enabled = false;
 }
 
 void scenario::run() {
@@ -33,6 +37,6 @@ void scenario::run() {
 		if (millis() < delay_time)
 			return;
 	}
-	delay_time = millis() + action();
+	delay_time = millis() + action(cycle);
 }
 

@@ -38,6 +38,24 @@
 #define DATA_PIN6 27
 #define DATA_PIN7 28
 
+// define which button control which manège
+#define B_MANEGE1 10
+#define B_MANEGE2 11
+#define B_MANEGE3 12
+#define B_MANEGE4 13
+#define B_TRAIN   14
+#define B_MANEGE5 20
+#define B_WATERPARK 21
+// define relay 
+#define R_MANEGE1 0  
+#define R_MANEGE2 1
+#define R_MANEGE3 2
+#define R_MANEGE4 3
+#define R_MANEGE5 4
+#define R_WATERPARK 5 
+
+#define MANEGE_DURATION 30000
+
 MD_YX5300 mp3(0,0);
 bool bUseCallback = true; // use callbacks?
 bool bUseSynch = false;   // use synchronous?
@@ -57,15 +75,6 @@ CRGB leds6[NUM_LEDS6];
 CRGB leds7[NUM_LEDS7];
 
 uint32_t current_time;
-uint8_t train_cycle;
-uint8_t led1_cycle;
-uint8_t led2_cycle;
-uint8_t led3_cycle;
-uint8_t led4_cycle;
-uint8_t led5_cycle;
-uint8_t led6_cycle;
-uint8_t led7_cycle;
-uint8_t led8_cycle;
 
 uint8_t current_color;
 
@@ -76,7 +85,7 @@ void setup() {
 	Wire.begin();
 	// Turn Off Relays
 	Wire.beginTransmission(0x20); // transmit to PCF8574
-	Wire.write(0x00); // make sure we are not changing "input" pins
+	Wire.write(0x00);
 	Wire.endTransmission();
 
 	pinMode(CURRENT_DETECT, INPUT);           // set pin to input for current detector
@@ -160,20 +169,17 @@ void setup() {
  	 	I2C_pinMode(20+i, INPUT);
   	}
  	current_time=0;
- 	train_cycle = 0;
- 	led1_cycle = 0;
- 	led2_cycle = 0;
- 	led3_cycle = 0;
- 	led4_cycle = 0;
- 	led5_cycle = 0;
- 	led6_cycle = 0;
- 	led7_cycle = 0;
- 	led8_cycle = 0;
  	led_string1.enable();
  	led_string2.enable();
  	led_string3.enable();
  	train_control.enable();
-
+ 	op_manege_1.enable();
+	op_manege_2.enable();
+	op_manege_3.enable();
+	op_manege_4.enable();
+	op_manege_5.enable();
+	op_manege_6.enable();
+	
  	for (uint8_t hue=0; hue < 255; hue++) {
  		FastLED.showColor(CHSV(hue, 255, 180));
  		delay(10);
@@ -187,6 +193,7 @@ void setup() {
  	digitalWrite(FET2, HIGH);
  	digitalWrite(FET3, LOW);
  	digitalWrite(FET4, HIGH);
+ 	mp3.volume(30);
 
  	delay (1000);
 
@@ -215,7 +222,14 @@ void loop() {
 	led_string2.run();
 	led_string3.run();
 	train_control.run();
-
+	op_manege_1.run();
+	op_manege_2.run();
+	op_manege_3.run();
+	op_manege_4.run();
+	op_manege_5.run();
+	op_manege_6.run();
+	
+#if 0
 	for (i=0; i<5; i++) {
 		if (I2C_digitalRead(10+i) == 0) {
 			Serial.print(F("Button "));
@@ -233,6 +247,6 @@ void loop() {
 		}
 
 	}
-
+#endif
 
 }

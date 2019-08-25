@@ -187,8 +187,6 @@ void setup() {
  	}
 
  	current_time=0;
-<<<<<<< HEAD
- 	train_cycle = 0;
 
  	led_string1.init();
  	led_string21.init();
@@ -205,19 +203,6 @@ void setup() {
  	led_string6.enable(led6_cycle);
  	train_control.enable(train_cycle);
 
-=======
- 	led_string1.enable();
- 	led_string2.enable();
- 	led_string3.enable();
- 	train_control.enable();
- 	op_manege_1.enable();
-	op_manege_2.enable();
-	op_manege_3.enable();
-	op_manege_4.enable();
-	op_manege_5.enable();
-	op_manege_6.enable();
-	
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
  	for (uint8_t hue=0; hue < 255; hue++) {
  		FastLED.showColor(CHSV(hue, 255, 180));
  		delay(10);
@@ -263,14 +248,7 @@ void loop() {
 	led_string5.run();
 	led_string6.run();
 	train_control.run();
-	op_manege_1.run();
-	op_manege_2.run();
-	op_manege_3.run();
-	op_manege_4.run();
-	op_manege_5.run();
-	op_manege_6.run();
 	
-#if 0
 	for (i=0; i<5; i++) {
 		if (I2C_digitalRead(10+i) == 0) {
 			Serial.print(F("Button "));
@@ -296,6 +274,4 @@ void loop() {
 		}
 
 	}
-#endif
-
 }

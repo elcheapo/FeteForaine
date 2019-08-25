@@ -64,40 +64,20 @@ void up1_led( uint8_t start) {
 	if (start < NUM_LEDS1 - 2)
 		leds1[(start+2) % NUM_LEDS1] = CRGB::Blue;
 }
-<<<<<<< HEAD
-
 uint32_t update_led1(void) {
 	switch (led1_cycle) {
-=======
-#endif
-uint32_t update_led1(uint8_t &cycle) {
-	uint8_t i;
-	switch (cycle) {
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
-<<<<<<< HEAD
-=======
-		for (i=0; i<NUM_LEDS1; i++) {
-			leds1[i] = CRGB::Black;
-		}
-		cycle = 1;
-		return 1000;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
-<<<<<<< HEAD
 	case NUM_LEDS1:
 		up1_led(NUM_LEDS1-1);
 		led1_cycle = 1;
 		return 300;
-=======
 	case 12:
 		up1_led(12);
-		cycle = 1;
+		led1_cycle = 1;
 		return 200;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	default:
-<<<<<<< HEAD
 		up1_led(led1_cycle-1);
 		led1_cycle++;
 		return 300;
@@ -181,11 +161,6 @@ uint32_t update_led21(void) {
 		leds2[1] = CRGB::Red;
 		led21_cycle = 1;
 		return 500;
-=======
-		up1_led(cycle - 1);
-		cycle ++;
-		return 200;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 
 	}
@@ -334,48 +309,28 @@ void up34_led( uint8_t start) {
 	leds2[start] = CRGB::Red;
 }
 
-<<<<<<< HEAD
 
 uint32_t update_led34(void) {
 	switch (led34_cycle) {
-=======
-uint32_t update_led2(uint8_t &cycle) {
-	uint8_t i;
-	switch (cycle) {
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
 		break;
 	case 1:
 		for (uint8_t i = 0; i<26; i++) {
 			leds3[]
 		}
-<<<<<<< HEAD
 		leds3[]
 		led34_cycle ++;
-=======
-		cycle=1;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 
 	case 12:
-<<<<<<< HEAD
 		up34_led(NUM_LEDS2-1);
 		led34_cycle = 1;
-=======
-		up2_led(NUM_LEDS2-1);
-		cycle = 1;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 	default:
-<<<<<<< HEAD
 		up34_led(led34_cycle-1);
 		led34_cycle++;
-=======
-		up2_led(cycle-1);
-		cycle++;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 	}
@@ -385,38 +340,19 @@ uint32_t update_led2(uint8_t &cycle) {
 scenario led_string34(&init34, &update_led34);
 
 /*********************************************************************************/
-<<<<<<< HEAD
 // Petit Bandeau / led5
 void init5(void) {
 	for (uint8_t i=0; i<NUM_LEDS5; i++) {
 		leds5[i] = CRGB::Black;
-=======
 
-#if 0
-void up3_led( uint8_t start) {
-	uint8_t i;
-	for( i=0; i<NUM_LEDS3 ; i++) {
-		leds3[i] = CRGB::Black;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
-	}
-<<<<<<< HEAD
-	led5_cycle=0;
-
-}
 void up5_led( uint8_t start) {
 	uint8_t i;
 	for( i=0; i<NUM_LEDS5 ; i++) {
 		leds5[i] = CRGB::Blue;
 	}
 	leds5[start]=CRGB::Red;
-=======
-	leds3[start] = CRGB::Red;
-	if (start < NUM_LEDS3-2)
-		leds3[(start+1) % NUM_LEDS3] = CRGB::Green;
-	if (start < NUM_LEDS3-3)
-		leds3[(start+2) % NUM_LEDS3] = CRGB::Blue;
 }
-#endif
+
 #define HUE 150
 void up3_led( uint8_t start) {
 	uint8_t i,diff;
@@ -424,50 +360,23 @@ void up3_led( uint8_t start) {
 		diff = abs(i-start);
 		leds3[i] = CHSV(HUE-diff,255,200);;
 	}
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
-}
-
-<<<<<<< HEAD
 uint32_t update_led5(void) {
 	switch (led5_cycle) {
-=======
 
 uint32_t update_led3(uint8_t & cycle) {
 	uint8_t i;
 	switch (cycle) {
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
-<<<<<<< HEAD
-=======
-		for (i=0; i<NUM_LEDS3; i++) {
-			leds3[i] = CRGB::Black;
-		}
-		cycle=1;
-		return 80;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
-<<<<<<< HEAD
 	case NUM_LEDS5:
 		up5_led(NUM_LEDS5-1);
 		led5_cycle = 1;
 		return 300;
-=======
-	case NUM_LEDS3:
-		up3_led(NUM_LEDS3-1);
-		cycle = 1;
-		return 80;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	default:
-<<<<<<< HEAD
 		up5_led(led5_cycle-1);
 		led5_cycle++;
 		return 300;
-=======
-		up3_led(cycle-1);
-		cycle++;
-		return 80;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	}
 return 0;
@@ -517,7 +426,7 @@ scenario led_string6(&init6, &update_led6);
 // Handling of the train
 
 uint16_t speed;
-<<<<<<< HEAD
+
 void train_init(void) {
 	speed = 0;
 	timer3.begin();
@@ -525,19 +434,11 @@ void train_init(void) {
 	train_cycle=0;
 }
 uint32_t train(void) {
-=======
-
-uint32_t train(uint8_t &cycle) {
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 //	Serial.print('T');
 	switch (cycle) {
 	case 0:
 		// Stop Train
 		timer3.analog_set_speed_and_direction(speed,off);
-<<<<<<< HEAD
-=======
-		cycle=1;
->>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 200;
 		break;
 	case 1:

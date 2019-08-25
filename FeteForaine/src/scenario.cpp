@@ -9,22 +9,26 @@
 #include "scenario.h"
 #include "actions.h"
 
-scenario::scenario(uint32_t (*_action)(void)) {
+scenario::scenario(void (*_init)(void), uint32_t (*_action)(void)) {
 	enabled = false;
 	delay_time = 0;
 	action = _action;
+	init = _init;
 }
 
 scenario::~scenario() {
 	// TODO Auto-generated destructor stub
 }
 
-void scenario::enable() {
+void scenario::enable(uint8_t &cycle) {
 	enabled = true;
+	cycle = 1;
 }
 
-void scenario::disable() {
-	enabled = true;
+void scenario::disable(uint8_t &cycle) {
+	enabled = false;
+	cycle = 0;
+	init();
 }
 
 void scenario::run() {

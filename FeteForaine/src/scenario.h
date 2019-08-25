@@ -11,14 +11,15 @@
 
 class scenario {
 public:
-	scenario(uint32_t (*_action)(void));
+	scenario(void (*_init)(void), uint32_t (*_action)(void));
 	virtual ~scenario();
 
-	void run();
-	void enable(void);
-	void disable(void);
+	void run(void);
+	void enable(uint8_t & cycle);
+	void disable(uint8_t & cycle);
 	boolean enabled;
 	uint32_t delay_time;
+	void (*init)(void);
 	uint32_t (*action)(void); // returns delay
 };
 

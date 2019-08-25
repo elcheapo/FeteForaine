@@ -3,8 +3,8 @@
 #include <FastLED.h>
 #include <MD_YX5300.h>
 #include <dcc_timer.h>
-#include <ssd1306.h>
-#include "nano_gfx.h"
+//#include <ssd1306.h>
+//#include "nano_gfx.h"
 #include "i2c_port.h"
 #include "scenario.h"
 #include "pixeltypes.h"
@@ -14,13 +14,20 @@
 
 #define CURRENT_DETECT 41
 // How many leds in your strip?
-#define NUM_LEDS1 144
-#define NUM_LEDS2 12
-#define NUM_LEDS3 57
-#define NUM_LEDS4 1
-#define NUM_LEDS5 1
-#define NUM_LEDS6 1
-#define NUM_LEDS7 1
+// Mas de cocagne 24+16, 12
+#define NUM_LEDS1 52
+// Palais des mirages (2) / Palais des glaces (3) + courone grande roue (12)
+#define NUM_LEDS2 15
+// grande roue gauche
+#define NUM_LEDS3 26
+// Grande roue droite
+#define NUM_LEDS4 26
+// Petit bandeau - 40 ?
+#define NUM_LEDS5 57
+// Grand bandeau 144
+#define NUM_LEDS6 144
+
+//#define NUM_LEDS7 50
 
 #define FET1 45
 #define FET2 44
@@ -36,16 +43,23 @@
 #define DATA_PIN4 25
 #define DATA_PIN5 26
 #define DATA_PIN6 27
-#define DATA_PIN7 28
+//#define DATA_PIN7 28
 
 MD_YX5300 mp3(0,0);
 bool bUseCallback = true; // use callbacks?
 bool bUseSynch = false;   // use synchronous?
 
 // Define 3 I2C extender
-#define NB_I2C_PORT 3
-I2c_Port i2c_ports[NB_I2C_PORT]= {I2c_Port(0x20), I2c_Port(0x21), I2c_Port(0x22)};
+#define NB_I2C_PORT 4
+I2c_Port i2c_ports[NB_I2C_PORT]= {I2c_Port(0x20), I2c_Port(0x21), I2c_Port(0x22), I2c_Port(0x23)};
 
+uint8_t led1_cycle;
+uint8_t led21_cycle;
+uint8_t led22_cycle;
+uint8_t led34_cycle;
+uint8_t led5_cycle;
+uint8_t led6_cycle;
+uint8_t train_cycle;
 
 // Define the array of leds
 CRGB leds1[NUM_LEDS1];
@@ -54,23 +68,13 @@ CRGB leds3[NUM_LEDS3];
 CRGB leds4[NUM_LEDS4];
 CRGB leds5[NUM_LEDS5];
 CRGB leds6[NUM_LEDS6];
-CRGB leds7[NUM_LEDS7];
+//CRGB leds7[NUM_LEDS7];
 
 uint32_t current_time;
-uint8_t train_cycle;
-uint8_t led1_cycle;
-uint8_t led2_cycle;
-uint8_t led3_cycle;
-uint8_t led4_cycle;
-uint8_t led5_cycle;
-uint8_t led6_cycle;
-uint8_t led7_cycle;
-uint8_t led8_cycle;
 
 uint8_t current_color;
 
 #include "helpers.h"
-
 void setup() { 
 	uint8_t i,ret;
 	Wire.begin();
@@ -101,23 +105,6 @@ void setup() {
 	}
 	Serial.println(F("Done"));
 
-
-
-	// LCD Init
-	/* Select the font to use with menu and all font functions */
-    ssd1306_128x64_i2c_init();
-    ssd1306_flipVertical(1);
-    ssd1306_flipHorizontal(1);
-    ssd1306_setFixedFont(ssd1306xled_font6x8);
-    ssd1306_clearScreen();
-    ssd1306_printFixed(0,  8, "Normal text", STYLE_NORMAL);
-    ssd1306_printFixed(0, 16, "Bold text", STYLE_BOLD);
-    ssd1306_printFixed(0, 24, "Italic text", STYLE_ITALIC);
-    ssd1306_negativeMode();
-    ssd1306_printFixed(0, 32, "Inverted bold", STYLE_BOLD);
-    ssd1306_positiveMode();
-    delay(1000);
-
     // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
     FastLED.addLeds<WS2812B, DATA_PIN1, GRB>(leds1, NUM_LEDS1);
     FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds2, NUM_LEDS2);
@@ -125,7 +112,7 @@ void setup() {
     FastLED.addLeds<WS2812B, DATA_PIN4, RGB>(leds4, NUM_LEDS4);
     FastLED.addLeds<WS2812B, DATA_PIN5, RGB>(leds5, NUM_LEDS5);
     FastLED.addLeds<WS2812B, DATA_PIN6, RGB>(leds6, NUM_LEDS6);
-    FastLED.addLeds<WS2812B, DATA_PIN7, RGB>(leds7, NUM_LEDS7);
+//    FastLED.addLeds<WS2812B, DATA_PIN7, RGB>(leds7, NUM_LEDS7);
 
     leds1[0] = CRGB::Red;
     leds1[1] = CRGB::Green;
@@ -136,6 +123,15 @@ void setup() {
     leds3[0] = CRGB::Red;
     leds3[1] = CRGB::Green;
     leds3[2] = CRGB::Blue;
+    leds4[0] = CRGB::Red;
+    leds4[1] = CRGB::Green;
+    leds4[2] = CRGB::Blue;
+    leds5[0] = CRGB::Red;
+    leds5[1] = CRGB::Green;
+    leds5[2] = CRGB::Blue;
+    leds6[0] = CRGB::Red;
+    leds6[1] = CRGB::Green;
+    leds6[2] = CRGB::Blue;
  	FastLED.show();
 
     delay(2000);
@@ -148,6 +144,13 @@ void setup() {
   	}
     for( uint16_t i=0; i<NUM_LEDS3; i++) {
     	leds3[i] = CRGB::Black;
+    	leds4[i] = CRGB::Black;
+    }
+    for( uint16_t i=0; i<NUM_LEDS5; i++) {
+    	leds5[i] = CRGB::Black;
+    }
+    for( uint16_t i=0; i<NUM_LEDS6; i++) {
+    	leds6[i] = CRGB::Black;
     }
 
  	FastLED.show();
@@ -158,21 +161,30 @@ void setup() {
  	for( uint16_t i=0; i<5; i++) {
  	 	I2C_pinMode(10+i, INPUT);
  	 	I2C_pinMode(20+i, INPUT);
+ 	 	I2C_pinMode(30+i, INPUT);
   	}
+
+ 	for (uint8_t i = 0; i < NB_I2C_PORT; i++) {
+ 		i2c_ports[i].set_input_i2c();
+ 	}
+
  	current_time=0;
  	train_cycle = 0;
- 	led1_cycle = 0;
- 	led2_cycle = 0;
- 	led3_cycle = 0;
- 	led4_cycle = 0;
- 	led5_cycle = 0;
- 	led6_cycle = 0;
- 	led7_cycle = 0;
- 	led8_cycle = 0;
- 	led_string1.enable();
- 	led_string2.enable();
- 	led_string3.enable();
- 	train_control.enable();
+
+ 	led_string1.init();
+ 	led_string21.init();
+ 	led_string22.init();
+ 	led_string34.init();
+ 	led_string5.init();
+ 	led_string6.init();
+
+ 	led_string1.enable(led1_cycle);
+ 	led_string21.enable(led21_cycle);
+ 	led_string22.enable(led22_cycle);
+ 	led_string34.enable(led34_cycle);
+ 	led_string5.enable(led5_cycle);
+ 	led_string6.enable(led6_cycle);
+ 	train_control.enable(train_cycle);
 
  	for (uint8_t hue=0; hue < 255; hue++) {
  		FastLED.showColor(CHSV(hue, 255, 180));
@@ -212,8 +224,11 @@ void loop() {
 
 	/* end of "background tasks */
 	led_string1.run();
-	led_string2.run();
-	led_string3.run();
+	led_string21.run();
+	led_string22.run();
+	led_string34.run();
+	led_string5.run();
+	led_string6.run();
 	train_control.run();
 
 	for (i=0; i<5; i++) {
@@ -230,6 +245,14 @@ void loop() {
 			mp3.playTrackRepeat(i+1);
 		} else {
 			I2C_digitalWrite(i+5, LOW);
+		}
+		if (I2C_digitalRead(30+i) == 0) {
+			Serial.print(F("Button "));
+			Serial.println(30+i);
+			I2C_digitalWrite(i+5, HIGH);
+			mp3.playTrackRepeat(i+1);
+		} else {
+			I2C_digitalWrite(i+1, LOW);
 		}
 
 	}

@@ -45,10 +45,12 @@ typedef struct {
 } t_io;
 
 inline uint8_t I2c_Port::read(void) {
+	if (disabled != 0) return 0xff;
 	return read_value;
 }
 inline uint8_t I2c_Port::read(uint32_t & _time_stamp) {
 	_time_stamp = time_stamp;
+	if (disabled != 0) return 0xff;
 	return read_value;
 }
 inline void I2c_Port::clear_mask (uint8_t x) {

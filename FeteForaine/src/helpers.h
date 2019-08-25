@@ -64,17 +64,40 @@ void up1_led( uint8_t start) {
 	if (start < NUM_LEDS1 - 2)
 		leds1[(start+2) % NUM_LEDS1] = CRGB::Blue;
 }
+<<<<<<< HEAD
 
 uint32_t update_led1(void) {
 	switch (led1_cycle) {
+=======
+#endif
+uint32_t update_led1(uint8_t &cycle) {
+	uint8_t i;
+	switch (cycle) {
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
+<<<<<<< HEAD
+=======
+		for (i=0; i<NUM_LEDS1; i++) {
+			leds1[i] = CRGB::Black;
+		}
+		cycle = 1;
+		return 1000;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
+<<<<<<< HEAD
 	case NUM_LEDS1:
 		up1_led(NUM_LEDS1-1);
 		led1_cycle = 1;
 		return 300;
+=======
+	case 12:
+		up1_led(12);
+		cycle = 1;
+		return 200;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	default:
+<<<<<<< HEAD
 		up1_led(led1_cycle-1);
 		led1_cycle++;
 		return 300;
@@ -158,6 +181,11 @@ uint32_t update_led21(void) {
 		leds2[1] = CRGB::Red;
 		led21_cycle = 1;
 		return 500;
+=======
+		up1_led(cycle - 1);
+		cycle ++;
+		return 200;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 
 	}
@@ -306,28 +334,48 @@ void up34_led( uint8_t start) {
 	leds2[start] = CRGB::Red;
 }
 
+<<<<<<< HEAD
 
 uint32_t update_led34(void) {
 	switch (led34_cycle) {
+=======
+uint32_t update_led2(uint8_t &cycle) {
+	uint8_t i;
+	switch (cycle) {
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
 		break;
 	case 1:
 		for (uint8_t i = 0; i<26; i++) {
 			leds3[]
 		}
+<<<<<<< HEAD
 		leds3[]
 		led34_cycle ++;
+=======
+		cycle=1;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 
 	case 12:
+<<<<<<< HEAD
 		up34_led(NUM_LEDS2-1);
 		led34_cycle = 1;
+=======
+		up2_led(NUM_LEDS2-1);
+		cycle = 1;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 	default:
+<<<<<<< HEAD
 		up34_led(led34_cycle-1);
 		led34_cycle++;
+=======
+		up2_led(cycle-1);
+		cycle++;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 500;
 		break;
 	}
@@ -337,11 +385,21 @@ uint32_t update_led34(void) {
 scenario led_string34(&init34, &update_led34);
 
 /*********************************************************************************/
+<<<<<<< HEAD
 // Petit Bandeau / led5
 void init5(void) {
 	for (uint8_t i=0; i<NUM_LEDS5; i++) {
 		leds5[i] = CRGB::Black;
+=======
+
+#if 0
+void up3_led( uint8_t start) {
+	uint8_t i;
+	for( i=0; i<NUM_LEDS3 ; i++) {
+		leds3[i] = CRGB::Black;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	}
+<<<<<<< HEAD
 	led5_cycle=0;
 
 }
@@ -351,21 +409,65 @@ void up5_led( uint8_t start) {
 		leds5[i] = CRGB::Blue;
 	}
 	leds5[start]=CRGB::Red;
+=======
+	leds3[start] = CRGB::Red;
+	if (start < NUM_LEDS3-2)
+		leds3[(start+1) % NUM_LEDS3] = CRGB::Green;
+	if (start < NUM_LEDS3-3)
+		leds3[(start+2) % NUM_LEDS3] = CRGB::Blue;
+}
+#endif
+#define HUE 150
+void up3_led( uint8_t start) {
+	uint8_t i,diff;
+	for( i=0; i<NUM_LEDS3 ; i++) {
+		diff = abs(i-start);
+		leds3[i] = CHSV(HUE-diff,255,200);;
+	}
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 }
 
+<<<<<<< HEAD
 uint32_t update_led5(void) {
 	switch (led5_cycle) {
+=======
+
+uint32_t update_led3(uint8_t & cycle) {
+	uint8_t i;
+	switch (cycle) {
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 	case 0:
+<<<<<<< HEAD
+=======
+		for (i=0; i<NUM_LEDS3; i++) {
+			leds3[i] = CRGB::Black;
+		}
+		cycle=1;
+		return 80;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
+<<<<<<< HEAD
 	case NUM_LEDS5:
 		up5_led(NUM_LEDS5-1);
 		led5_cycle = 1;
 		return 300;
+=======
+	case NUM_LEDS3:
+		up3_led(NUM_LEDS3-1);
+		cycle = 1;
+		return 80;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	default:
+<<<<<<< HEAD
 		up5_led(led5_cycle-1);
 		led5_cycle++;
 		return 300;
+=======
+		up3_led(cycle-1);
+		cycle++;
+		return 80;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		break;
 	}
 return 0;
@@ -415,6 +517,7 @@ scenario led_string6(&init6, &update_led6);
 // Handling of the train
 
 uint16_t speed;
+<<<<<<< HEAD
 void train_init(void) {
 	speed = 0;
 	timer3.begin();
@@ -422,37 +525,51 @@ void train_init(void) {
 	train_cycle=0;
 }
 uint32_t train(void) {
+=======
+
+uint32_t train(uint8_t &cycle) {
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 //	Serial.print('T');
-	switch (train_cycle) {
+	switch (cycle) {
 	case 0:
 		// Stop Train
 		timer3.analog_set_speed_and_direction(speed,off);
+<<<<<<< HEAD
+=======
+		cycle=1;
+>>>>>>> branch 'master' of git://cygne/git/FeteForaine
 		return 200;
 		break;
 	case 1:
-		if (I2C_digitalRead(10) == LOW) {
+		if (I2C_digitalRead(B_TRAIN) == LOW) {
 			// button pressed, start the train
 			Serial.print('S');
 			speed = 200;
-			timer3.analog_set_speed_and_direction(speed, forward);
+			timer3.analog_set_speed_and_direction(speed, backward);
 			Serial.println(F("Train starts"));
 			return 3000; // give it time to get out of detection zone
 		}
-		if (I2C_digitalRead(11) == LOW) {
+		if (I2C_digitalRead(23) == LOW) {
 			// button pressed, faster
 			Serial.print('+');
 			speed += 10;
-			timer3.analog_set_speed_and_direction(speed, forward);
+			timer3.analog_set_speed_and_direction(speed, backward);
 		}
-		if (I2C_digitalRead(12) == LOW) {
+		if (I2C_digitalRead(24) == LOW) {
 			// button pressed, slower
 			Serial.print('-');
 			speed -= 10;
-			timer3.analog_set_speed_and_direction(speed, forward);
+			timer3.analog_set_speed_and_direction(speed, backward);
+		}
+		if ((I2C_digitalRead(23) == LOW) & (I2C_digitalRead(24) == LOW)) {
+			// button pressed, slower
+			Serial.println('STOP');
+			speed = 0;
+			timer3.analog_set_speed_and_direction(speed, backward);
 		}
 		// If train goes in front of station, stop
 		if (digitalRead(CURRENT_DETECT) == LOW) {
-			train_cycle = 0;
+			cycle = 0;
 			return 0;
 		}
 		return 200;
@@ -466,6 +583,205 @@ return 0;
 
 scenario train_control(&train_init, &train);
 
+/*********************************************************************************/
+
+uint32_t manege1(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_MANEGE1,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_MANEGE1) == LOW) {
+			I2C_digitalWrite(R_MANEGE1, HIGH);
+			mp3.playTrackRepeat(6);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_MANEGE1, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_1(&manege1);
+
+
+/*********************************************************************************/
+
+uint32_t manege2(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_MANEGE2,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_MANEGE2) == LOW) {
+			I2C_digitalWrite(R_MANEGE2, HIGH);
+			mp3.playTrackRepeat(7);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_MANEGE2, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_2(&manege2);
+
+/*********************************************************************************/
+
+/*********************************************************************************/
+
+uint32_t manege3(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_MANEGE3,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_MANEGE3) == LOW) {
+			I2C_digitalWrite(R_MANEGE3, HIGH);
+			mp3.playTrackRepeat(8);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_MANEGE3, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_3(&manege3);
+
+/*********************************************************************************/
+
+/*********************************************************************************/
+
+uint32_t manege4(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_MANEGE4,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_MANEGE4) == LOW) {
+			I2C_digitalWrite(R_MANEGE4, HIGH);
+			mp3.playTrackRepeat(9);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_MANEGE4, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_4(&manege4);
+
+/*********************************************************************************/
+
+/*********************************************************************************/
+
+uint32_t manege5(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_MANEGE5,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_MANEGE5) == LOW) {
+			I2C_digitalWrite(R_MANEGE5, HIGH);
+			mp3.playTrackRepeat(10);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_MANEGE5, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_5(&manege5);
+
+/*********************************************************************************/
+/*********************************************************************************/
+
+uint32_t manege6(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		// Turn Off Manège
+		I2C_digitalWrite(R_WATERPARK,LOW);
+		cycle = 1;
+		return 500;
+		break;
+	case 1:
+		if (I2C_digitalRead(B_WATERPARK) == LOW) {
+			I2C_digitalWrite(R_WATERPARK, HIGH);
+			mp3.playTrackRepeat(10);
+			cycle = 2;
+		}
+		return 500;
+		break;
+	case 2:
+		cycle = 3;
+		return MANEGE_DURATION;
+	default:
+		cycle = 1;
+		I2C_digitalWrite(R_WATERPARK, LOW);
+		return 500;
+		break;
+	}
+return 0;
+}
+
+scenario op_manege_6(&manege6);
 
 void cbResponse(const MD_YX5300::cbData *status)
 // Used to process device responses either as a library callback function

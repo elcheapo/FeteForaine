@@ -9,7 +9,7 @@
 #include "scenario.h"
 #include "actions.h"
 
-scenario::scenario(void (*_init)(void), uint32_t (*_action)(void)) {
+scenario::scenario(void (*_init)(uint8_t &), uint32_t (*_action)(uint8_t &)) {
 	enabled = false;
 	delay_time = 0;
 	cycle = 0;
@@ -28,11 +28,10 @@ void scenario::enable(uint8_t &cycle) {
 
 void scenario::disable(uint8_t &cycle) {
 	enabled = false;
-	cycle = 0;
-	init();
+	init(cycle);
 }
 
-void scenario::run() {
+void scenario::run(uint8_t &cycle) {
 	if (!enabled) return;
 	if (delay_time != 0) {
 		if (millis() < delay_time)

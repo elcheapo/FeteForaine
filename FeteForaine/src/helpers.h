@@ -46,121 +46,159 @@ void I2C_pinMode(uint8_t pin, uint8_t mode){
 }
 
 /*********************************************************************************/
-// Mas de cocagne 40 + 12 / led1
-void init1 (void){
-	for (uint8_t i=0; i<NUM_LEDS1; i++) {
+// Mas de cocagne 40 [0..39] / led1
+
+#define NUM_LEDS11 40
+
+void init11 (uint8_t &cycle){
+	for (uint8_t i=0; i<NUM_LEDS11; i++) {
 		leds1[i] = CRGB::Black;
 	}
-	led1_cycle=0;
+	cycle=0;
 }
-void up1_led( uint8_t start) {
-	uint8_t i;
-	for( i=0; i<NUM_LEDS1 ; i++) {
-		leds1[i] = CRGB::Black;
-	}
-	leds1[start] = CRGB::Red;
-	if (start < NUM_LEDS1 - 1)
-		leds1[(start+1) % NUM_LEDS1] = CRGB::Green;
-	if (start < NUM_LEDS1 - 2)
-		leds1[(start+2) % NUM_LEDS1] = CRGB::Blue;
-}
-uint32_t update_led1(void) {
-	switch (led1_cycle) {
+
+uint32_t update_led11(uint8_t &cycle) {
+	switch (cycle) {
 	case 0:
 		break;
-	case NUM_LEDS1:
-		up1_led(NUM_LEDS1-1);
-		led1_cycle = 1;
-		return 300;
-	case 12:
-		up1_led(12);
-		led1_cycle = 1;
-		return 200;
-		break;
+	case 1:
+		for (uint8_t i=0; i<32; i++) {
+			leds1[i] = CRGB::White;
+		}
+		for (uint8_t i=32; i<NUM_LEDS11; i++) {
+			leds1[i] = CRGB::Cyan;
+		}
+		cycle = 2;
+		return 900;
 	default:
-		up1_led(led1_cycle-1);
-		led1_cycle++;
-		return 300;
+		for (uint8_t i=0; i<32; i++) {
+			leds1[i] = CRGB::Cyan;
+		}
+		for (uint8_t i=32; i<NUM_LEDS11; i++) {
+			leds1[i] = CRGB::White;
+		}
+		cycle = 1;
+		return 900;
 		break;
 	}
 return 0;
 }
 
-scenario led_string1(&init1, &update_led1);
+scenario led_string11(&init11, &update_led11);
+
+/*********************************************************************************/
+// Mas de cocagne 12 [40..51] / led1
+
+#define NUM_LEDS12 12
+#define OFFSET12 40
+
+void init12 (uint8_t &cycle){
+	for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i++) {
+		leds1[i] = CRGB::Black;
+	}
+	cycle=0;
+}
+
+uint32_t update_led12(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		break;
+	case 1:
+		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
+			leds1[i] = CRGB::Red;
+			leds1[i+1] = CRGB::Orange;
+		}
+		cycle = 2;
+		return 1000;
+	default:
+		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
+			leds1[i] = CRGB::Orange;
+			leds1[i+1] = CRGB::Red;
+		}
+		cycle = 1;
+		return 1000;
+		break;
+	}
+return 0;
+}
+
+scenario led_string12(&init12, &update_led12);
 
 
 
 /************************************************************************************************/
 // Scenario for string 21 - Palais des mirages 2 LED leds2[0], leds2[1]
 
-void init21(void) {
+#define DELAY21 500
+
+void init21(uint8_t &cycle) {
 	leds2[0] = CRGB::Black;
 	leds2[1] = CRGB::Black;
-	led21_cycle=0;
+	cycle=0;
 }
-uint32_t update_led21(void) {
-	switch (led21_cycle) {
+uint32_t update_led21(uint8_t &cycle) {
+	switch (cycle) {
 	case 0:
 		break;
 	case 1:
 		leds2[0] = CRGB::Red;
 		leds2[1] = CRGB::Yellow;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 2:
 		leds2[0] = CRGB::Yellow;
 		leds2[1] = CRGB::Red;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 3:
 		leds2[0] = CRGB::Yellow;
 		leds2[1] = CRGB::Green;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 4:
 		leds2[0] = CRGB::Green;
 		leds2[1] = CRGB::Blue;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 5:
 		leds2[0] = CRGB::Blue;
 		leds2[1] = CRGB::Cyan;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 6:
 		leds2[0] = CRGB::Cyan;
 		leds2[1] = CRGB::OrangeRed;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 7:
 		leds2[0] = CRGB::OrangeRed;
 		leds2[1] = CRGB::Orange;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 8:
 		leds2[0] = CRGB::Orange;
 		leds2[1] = CRGB::Pink;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	case 9:
 		leds2[0] = CRGB::Pink;
 		leds2[1] = CRGB::Azure;
-		led21_cycle ++;
-		return 500;
+		cycle ++;
+		return DELAY21;
 		break;
 	default:
 		leds2[0] = CRGB::Azure;
 		leds2[1] = CRGB::Red;
-		led21_cycle = 1;
-		return 500;
+		cycle = 1;
+		return DELAY21;
 		break;
 
 	}
@@ -174,105 +212,105 @@ scenario led_string21(&init21, &update_led21);
 
 #define DELAY22 400
 
-void init22(void) {
+void init22(uint8_t &cycle) {
 	leds2[2] = CRGB::Black;
 	leds2[3] = CRGB::Black;
 	leds2[4] = CRGB::Black;
-	led22_cycle=0;
+	cycle=0;
 }
-uint32_t update_led22(void) {
-	switch (led22_cycle) {
+uint32_t update_led22(uint8_t &cycle) {
+	switch (cycle) {
 	case 0:
 		break;
 	case 1:
 		leds2[2] = CRGB::Blue;
 		leds2[3] = CRGB::Blue;
 		leds2[4] = CRGB::Blue;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 2:
 		leds2[2] = CRGB::Cyan;
 		leds2[3] = CRGB::Cyan;
 		leds2[4] = CRGB::Cyan;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 3:
 		leds2[2] = CRGB::AliceBlue;
 		leds2[3] = CRGB::AliceBlue;
 		leds2[4] = CRGB::AliceBlue;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 4:
 		leds2[2] = CRGB::Aqua;
 		leds2[3] = CRGB::Aqua;
 		leds2[4] = CRGB::Aqua;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 5:
 		leds2[2] = CRGB::CadetBlue;
 		leds2[3] = CRGB::CadetBlue;
 		leds2[4] = CRGB::CadetBlue;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 6:
 		leds2[2] = CRGB::Aquamarine;
 		leds2[3] = CRGB::Aquamarine;
 		leds2[4] = CRGB::Aquamarine;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 7:
 		leds2[2] = CRGB::DarkBlue;
 		leds2[3] = CRGB::DarkBlue;
 		leds2[4] = CRGB::DarkBlue;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 8:
 		leds2[2] = CRGB::DarkCyan;
 		leds2[3] = CRGB::DarkCyan;
 		leds2[4] = CRGB::DarkCyan;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 9:
 		leds2[2] = CRGB::BlueViolet;
 		leds2[3] = CRGB::BlueViolet;
 		leds2[4] = CRGB::BlueViolet;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 10:
 		leds2[2] = CRGB::DarkSlateBlue;
 		leds2[3] = CRGB::DarkSlateBlue;
 		leds2[4] = CRGB::DarkSlateBlue;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 11:
 		leds2[2] = CRGB::Lavender;
 		leds2[3] = CRGB::Lavender;
 		leds2[4] = CRGB::Lavender;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	case 12:
 		leds2[2] = CRGB::LavenderBlush;
 		leds2[3] = CRGB::LavenderBlush;
 		leds2[4] = CRGB::LavenderBlush;
-		led22_cycle ++;
+		cycle ++;
 		return DELAY22;
 		break;
 	default:
 		leds2[2] = CRGB::LightCyan;
 		leds2[3] = CRGB::LightCyan;
 		leds2[4] = CRGB::LightCyan;
-		led22_cycle =1;
+		cycle =1;
 		return DELAY22;
 		break;
 
@@ -290,7 +328,7 @@ scenario led_string22(&init22, &update_led22);
 
 uint8_t hue34;
 
-void init34 (void) {
+void init34 (uint8_t &cycle) {
 	for (uint8_t i=0; i<NUM_LEDS3; i++) {
 		leds3[i] = CRGB::Black;
 		leds4[i] = CRGB::Black;
@@ -298,39 +336,39 @@ void init34 (void) {
 	for (uint8_t i=0; i<NUM_LEDS2-5; i++) {
 		leds2[i+5] = CRGB::Black;
 	}
-	led34_cycle=0;
+	cycle=0;
 	hue34  = 0;
 }
 void up34_led( uint8_t start) {
-	uint8_t i;
-	for( i=0; i<NUM_LEDS2 ; i++) {
-		leds2[i] = CRGB::Black;
+	for  (uint8_t i = 0; i < (2*start); i++) {
+		leds3[i]=CHSV(hue34, 255, 180);
+		leds4[i]=CHSV(hue34, 255, 180);
 	}
-	leds2[start] = CRGB::Red;
+	uint8_t j = 0;
+	for (uint8_t i = (2*start); i < 26; i++) {
+		j++;
+		leds3[i]=CHSV(hue34, 255-(4*j), 180);
+		leds4[i]=CHSV(hue34, 255-(4*j), 180);
+	}
+	for (uint8_t i=0; i<NUM_LEDS2-5; i++) {
+		leds2[i+5] = CHSV(hue34, 255-(4*j), 180);
+	}
 }
 
 
-uint32_t update_led34(void) {
-	switch (led34_cycle) {
+uint32_t update_led34(uint8_t &cycle) {
+	switch (cycle) {
 	case 0:
 		break;
-	case 1:
-		for (uint8_t i = 0; i<26; i++) {
-			leds3[]
-		}
-		leds3[]
-		led34_cycle ++;
-		return 500;
-		break;
-
-	case 12:
-		up34_led(NUM_LEDS2-1);
-		led34_cycle = 1;
-		return 500;
-		break;
 	default:
-		up34_led(led34_cycle-1);
-		led34_cycle++;
+		up34_led(cycle);
+		cycle ++;
+		return 500;
+		break;
+	case 13:
+		up34_led(cycle);
+		cycle = 1;
+		hue34 += 8;
 		return 500;
 		break;
 	}
@@ -341,41 +379,34 @@ scenario led_string34(&init34, &update_led34);
 
 /*********************************************************************************/
 // Petit Bandeau / led5
-void init5(void) {
+void init5(uint8_t &cycle) {
 	for (uint8_t i=0; i<NUM_LEDS5; i++) {
 		leds5[i] = CRGB::Black;
-
-void up5_led( uint8_t start) {
-	uint8_t i;
-	for( i=0; i<NUM_LEDS5 ; i++) {
-		leds5[i] = CRGB::Blue;
 	}
-	leds5[start]=CRGB::Red;
 }
 
+
 #define HUE 150
-void up3_led( uint8_t start) {
+void up5_led( uint8_t start) {
 	uint8_t i,diff;
 	for( i=0; i<NUM_LEDS3 ; i++) {
 		diff = abs(i-start);
 		leds3[i] = CHSV(HUE-diff,255,200);;
 	}
-uint32_t update_led5(void) {
-	switch (led5_cycle) {
+}
 
-uint32_t update_led3(uint8_t & cycle) {
-	uint8_t i;
+uint32_t update_led5(uint8_t & cycle) {
 	switch (cycle) {
 	case 0:
 		break;
 	case NUM_LEDS5:
 		up5_led(NUM_LEDS5-1);
-		led5_cycle = 1;
+		cycle = 1;
 		return 300;
 		break;
 	default:
-		up5_led(led5_cycle-1);
-		led5_cycle++;
+		up5_led(cycle-1);
+		cycle++;
 		return 300;
 		break;
 	}
@@ -386,11 +417,11 @@ scenario led_string5(&init5, &update_led5);
 
 /*********************************************************************************/
 // Grand bandeau / led6
-void init6 (void) {
+void init6 (uint8_t &cycle) {
 	for (uint8_t i=0; i<NUM_LEDS6; i++) {
 		leds6[i] = CRGB::Black;
 	}
-	led6_cycle=0;
+	cycle=0;
 }
 
 void up6_led( uint8_t start) {
@@ -401,18 +432,18 @@ void up6_led( uint8_t start) {
 	leds6[start] = CRGB::Red;
 }
 
-uint32_t update_led6(void) {
-	switch (led6_cycle) {
+uint32_t update_led6(uint8_t &cycle) {
+	switch (cycle) {
 	case 0:
 		break;
 	case NUM_LEDS6:
 		up6_led(NUM_LEDS6-1);
-		led6_cycle = 1;
+		cycle = 1;
 		return 300;
 		break;
 	default:
-		up6_led(led6_cycle-1);
-		led6_cycle++;
+		up6_led(cycle-1);
+		cycle++;
 		return 300;
 		break;
 	}
@@ -427,13 +458,13 @@ scenario led_string6(&init6, &update_led6);
 
 uint16_t speed;
 
-void train_init(void) {
+void train_init(uint8_t &cycle) {
 	speed = 0;
 	timer3.begin();
 	timer3.analog_set_speed_and_direction(speed,off);
-	train_cycle=0;
+	cycle=0;
 }
-uint32_t train(void) {
+uint32_t train(uint8_t &cycle) {
 //	Serial.print('T');
 	switch (cycle) {
 	case 0:
@@ -464,7 +495,7 @@ uint32_t train(void) {
 		}
 		if ((I2C_digitalRead(23) == LOW) & (I2C_digitalRead(24) == LOW)) {
 			// button pressed, slower
-			Serial.println('STOP');
+			Serial.println(F("STOP"));
 			speed = 0;
 			timer3.analog_set_speed_and_direction(speed, backward);
 		}
@@ -486,13 +517,17 @@ scenario train_control(&train_init, &train);
 
 /*********************************************************************************/
 
+void init_manege1(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_MANEGE1,LOW);
+	cycle = 0;
+
+}
+
 uint32_t manege1(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_MANEGE1,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_MANEGE1) == LOW) {
@@ -514,18 +549,20 @@ uint32_t manege1(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_1(&manege1);
+scenario op_manege1(&init_manege1,&manege1);
 
 
 /*********************************************************************************/
+void init_manege2(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_MANEGE2,LOW);
+	cycle = 0;
 
+}
 uint32_t manege2(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_MANEGE2,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_MANEGE2) == LOW) {
@@ -547,19 +584,21 @@ uint32_t manege2(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_2(&manege2);
+scenario op_manege2(&init_manege2, &manege2);
 
 /*********************************************************************************/
 
 /*********************************************************************************/
+void init_manege3(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_MANEGE3,LOW);
+	cycle = 0;
 
+}
 uint32_t manege3(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_MANEGE3,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_MANEGE3) == LOW) {
@@ -581,19 +620,21 @@ uint32_t manege3(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_3(&manege3);
+scenario op_manege3(&init_manege3, &manege3);
 
 /*********************************************************************************/
 
 /*********************************************************************************/
+void init_manege4(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_MANEGE4,LOW);
+	cycle = 0;
 
+}
 uint32_t manege4(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_MANEGE4,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_MANEGE4) == LOW) {
@@ -615,19 +656,21 @@ uint32_t manege4(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_4(&manege4);
+scenario op_manege4(&init_manege4, &manege4);
 
 /*********************************************************************************/
 
 /*********************************************************************************/
+void init_manege5(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_MANEGE5,LOW);
+	cycle = 0;
 
+}
 uint32_t manege5(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_MANEGE5,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_MANEGE5) == LOW) {
@@ -649,18 +692,20 @@ uint32_t manege5(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_5(&manege5);
+scenario op_manege5(&init_manege5, &manege5);
 
 /*********************************************************************************/
 /*********************************************************************************/
+void init_manege6(uint8_t &cycle) {
+	// Turn Off Manège
+	I2C_digitalWrite(R_WATERPARK,LOW);
+	cycle = 0;
 
+}
 uint32_t manege6(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
-		// Turn Off Manège
-		I2C_digitalWrite(R_WATERPARK,LOW);
-		cycle = 1;
-		return 500;
+		return 0;
 		break;
 	case 1:
 		if (I2C_digitalRead(B_WATERPARK) == LOW) {
@@ -682,13 +727,225 @@ uint32_t manege6(uint8_t &cycle) {
 return 0;
 }
 
-scenario op_manege_6(&manege6);
+scenario op_manege6(&init_manege6, &manege6);
+
+/*-----------------------------------------------------*/
+// Operator button 1 //STOP EVERYTHING, restart after a 1 sec press
+uint8_t long_press;
+
+void init_op1(uint8_t &cycle) {
+	cycle = 0;
+	long_press = 0;
+}
+
+
+uint32_t run_op1_button(uint8_t &cycle) {
+
+	switch (cycle){
+	case 0:
+		return 0;
+		break;
+	case 1:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		 	led_string11.disable(led11_cycle);
+		 	led_string12.disable(led12_cycle);
+		 	led_string21.disable(led21_cycle);
+		 	led_string22.disable(led22_cycle);
+		 	led_string34.disable(led34_cycle);
+		 	led_string5.disable(led5_cycle);
+		 	led_string6.disable(led6_cycle);
+		 	train_control.disable(train_cycle);
+		 	op_manege1.disable(manege1_cycle);
+		 	op_manege2.disable(manege2_cycle);
+		 	op_manege3.disable(manege3_cycle);
+		 	op_manege4.disable(manege4_cycle);
+		 	op_manege5.disable(manege5_cycle);
+		 	op_manege6.disable(manege6_cycle);
+		}
+		cycle = 2;
+		return 200;
+	case 2:
+		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+			// Button not pressed, wait for a long press to re-enable
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 3:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+			// Button pressed, wait for a long press to re-enable
+			cycle = 4;
+			return 1000;
+		}
+		return 200;
+		break;
+
+	case 4:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+			// Button still pressed, re-enable everything
+			led_string11.enable(led11_cycle);
+			led_string12.enable(led12_cycle);
+			led_string21.enable(led21_cycle);
+			led_string22.enable(led22_cycle);
+			led_string34.enable(led34_cycle);
+			led_string5.enable(led5_cycle);
+			led_string6.enable(led6_cycle);
+			train_control.enable(train_cycle);
+			op_manege1.enable(manege1_cycle);
+			op_manege2.enable(manege2_cycle);
+			op_manege3.enable(manege3_cycle);
+			op_manege4.enable(manege4_cycle);
+			op_manege5.enable(manege5_cycle);
+			op_manege6.enable(manege6_cycle);
+			cycle = 5;
+		} else {
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 5:
+	default:
+		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+			// Button not pressed, go back to state 1
+			cycle = 1;
+		}
+		return 200;
+		break;
+
+	}
+	return 0;
+}
+
+scenario op_button1(&init_op1, &run_op1_button);
+
+/*-----------------------------------------------------*/
+// Operator button 2 // Switch OFF WATERPARK
+
+void init_op2(uint8_t &cycle) {
+	cycle = 0;
+	long_press = 0;
+
+}
+
+uint32_t run_op2_button(uint8_t &cycle) {
+
+	switch (cycle){
+	case 0:
+		return 0;
+		break;
+	case 1:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		 	led_string5.disable(led5_cycle);
+		 	op_manege6.disable(manege6_cycle);
+		}
+		cycle = 2;
+		return 200;
+	case 2:
+		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+			// Button not pressed, wait for a long press to re-enable
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 3:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+			// Button pressed, wait for a long press to re-enable
+			cycle = 4;
+			return 1000;
+		}
+		return 200;
+		break;
+
+	case 4:
+		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+			// Button still pressed, re-enable everything
+			led_string5.enable(led5_cycle);
+			op_manege6.enable(manege6_cycle);
+			cycle = 5;
+		} else {
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 5:
+	default:
+		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+			// Button not pressed, go back to state 1
+			cycle = 1;
+		}
+		return 200;
+		break;
+
+	}
+	return 0;
+}
+
+scenario op_button2(&init_op2, &run_op2_button);
+
+/*-----------------------------------------------------*/
+// Operator button 3
+
+void init_op3(uint8_t &cycle) {
+
+}
+
+uint32_t run_op3_button(uint8_t &cycle) {
+
+	return 10000;
+
+}
+
+scenario op_button3(&init_op3, &run_op3_button);
+
+/*-----------------------------------------------------*/
+// Operator button 4
+
+void init_op4(uint8_t &cycle) {
+
+}
+
+uint32_t run_op4_button(uint8_t &cycle) {
+
+	return 10000;
+
+}
+
+scenario op_button4(&init_op4, &run_op4_button);
+
+
+/*-----------------------------------------------------*/
+// MP3 Control
+
+void init_mp3(uint8_t &cycle) {
+	cycle = 0;
+	mp3.playStop();
+	mp3_status = 0;
+	requested_music = 0;
+}
+
+uint32_t run_mp3(uint8_t &cycle) {
+
+	// 1) if track ended, restart with default track
+	if (mp3_status == MD_YX5300::STS_FILE_END) {
+		mp3.playTrack(MP3_DEFAULT);
+	}
+	// 2) if somebody wants a specific song, play it ...
+	if (requested_music != 0) {
+		mp3.playTrack(requested_music);
+		requested_music = 0;
+	}
+	return 100;
+
+}
+
+scenario op_mp3(&init_mp3, &run_mp3);
 
 void cbResponse(const MD_YX5300::cbData *status)
 // Used to process device responses either as a library callback function
 // or called locally when not in callback mode.
 {
-  if (bUseCallback)
+	mp3_status = status->code;
+	if (bUseCallback)
     Serial.print(F("\nCback status: "));
   else
     Serial.print(F("\nSync Status: "));

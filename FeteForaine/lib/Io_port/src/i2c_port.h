@@ -16,7 +16,6 @@
 class I2c_Port : public Io_Port {
   private:
 	uint8_t i2c_address;
-	uint8_t read_value;
 	uint8_t write_value;
 	uint8_t input_mask;
 	uint8_t modified;
@@ -26,6 +25,7 @@ class I2c_Port : public Io_Port {
   protected:
 
   public:
+	uint8_t read_value; // to allow fake input
     I2c_Port(uint8_t i2c_address);
     void write_i2c (void);
     void read_i2c (void);

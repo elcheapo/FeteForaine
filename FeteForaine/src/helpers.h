@@ -532,7 +532,7 @@ uint32_t manege1(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_MANEGE1) == LOW) {
 			I2C_digitalWrite(R_MANEGE1, HIGH);
-			mp3.playTrackRepeat(6);
+			requested_music = TRACK_MAGNEGE1;
 			cycle = 2;
 		}
 		return 500;
@@ -567,7 +567,7 @@ uint32_t manege2(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_MANEGE2) == LOW) {
 			I2C_digitalWrite(R_MANEGE2, HIGH);
-			mp3.playTrackRepeat(7);
+			requested_music = TRACK_MAGNEGE2;
 			cycle = 2;
 		}
 		return 500;
@@ -603,7 +603,7 @@ uint32_t manege3(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_MANEGE3) == LOW) {
 			I2C_digitalWrite(R_MANEGE3, HIGH);
-			mp3.playTrackRepeat(8);
+			requested_music = TRACK_MAGNEGE3;
 			cycle = 2;
 		}
 		return 500;
@@ -639,7 +639,7 @@ uint32_t manege4(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_MANEGE4) == LOW) {
 			I2C_digitalWrite(R_MANEGE4, HIGH);
-			mp3.playTrackRepeat(9);
+			requested_music = TRACK_MAGNEGE4;
 			cycle = 2;
 		}
 		return 500;
@@ -675,7 +675,7 @@ uint32_t manege5(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_MANEGE5) == LOW) {
 			I2C_digitalWrite(R_MANEGE5, HIGH);
-			mp3.playTrackRepeat(10);
+			requested_music = TRACK_MAGNEGE5;
 			cycle = 2;
 		}
 		return 500;
@@ -710,7 +710,7 @@ uint32_t manege6(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_WATERPARK) == LOW) {
 			I2C_digitalWrite(R_WATERPARK, HIGH);
-			mp3.playTrackRepeat(10);
+			requested_music = TRACK_MAGNEGE6;
 			cycle = 2;
 		}
 		return 500;
@@ -761,6 +761,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		 	op_manege4.disable(manege4_cycle);
 		 	op_manege5.disable(manege5_cycle);
 		 	op_manege6.disable(manege6_cycle);
+		 	digitalWrite(FET4, LOW);
 		}
 		cycle = 2;
 		return 200;
@@ -797,6 +798,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 			op_manege4.enable(manege4_cycle);
 			op_manege5.enable(manege5_cycle);
 			op_manege6.enable(manege6_cycle);
+		 	digitalWrite(FET4, HIGH);
 			cycle = 5;
 		} else {
 			cycle = 3;
@@ -883,16 +885,71 @@ uint32_t run_op2_button(uint8_t &cycle) {
 scenario op_button2(&init_op2, &run_op2_button);
 
 /*-----------------------------------------------------*/
-// Operator button 3
+// Operator button 3 : disable all menege and train
 
 void init_op3(uint8_t &cycle) {
-
+	cycle = 0;
 }
 
 uint32_t run_op3_button(uint8_t &cycle) {
+	switch (cycle){
+	case 0:
+		return 0;
+		break;
+	case 1:
+		if (I2C_digitalRead(OP_BUTTON3) == LOW) {
+		 	train_control.disable(train_cycle);
+		 	op_manege1.disable(manege1_cycle);
+		 	op_manege2.disable(manege2_cycle);
+		 	op_manege3.disable(manege3_cycle);
+		 	op_manege4.disable(manege4_cycle);
+		 	op_manege5.disable(manege5_cycle);
+		 	op_manege6.disable(manege6_cycle);
+		}
+		cycle = 2;
+		return 200;
+	case 2:
+		if (I2C_digitalRead(OP_BUTTON3) == HIGH) {
+			// Button not pressed, wait for a long press to re-enable
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 3:
+		if (I2C_digitalRead(OP_BUTTON3) == LOW) {
+			// Button pressed, wait for a long press to re-enable
+			cycle = 4;
+			return 1000;
+		}
+		return 200;
+		break;
 
-	return 10000;
+	case 4:
+		if (I2C_digitalRead(OP_BUTTON3) == LOW) {
+			// Button still pressed, re-enable everything
+			op_manege1.enable(manege1_cycle);
+			op_manege2.enable(manege2_cycle);
+			op_manege3.enable(manege3_cycle);
+			op_manege4.enable(manege4_cycle);
+			op_manege5.enable(manege5_cycle);
+			op_manege6.enable(manege6_cycle);
+			cycle = 5;
+		} else {
+			cycle = 3;
+		}
+		return 200;
+		break;
+	case 5:
+	default:
+		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+			// Button not pressed, go back to state 1
+			cycle = 1;
+		}
+		return 200;
+		break;
 
+	}
+	return 0;
 }
 
 scenario op_button3(&init_op3, &run_op3_button);
@@ -901,7 +958,7 @@ scenario op_button3(&init_op3, &run_op3_button);
 // Operator button 4
 
 void init_op4(uint8_t &cycle) {
-
+	cycle = 0;
 }
 
 uint32_t run_op4_button(uint8_t &cycle) {

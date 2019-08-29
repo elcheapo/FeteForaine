@@ -79,7 +79,17 @@
 MD_YX5300 mp3(0,0);
 bool bUseCallback = true; // use callbacks?
 bool bUseSynch = false;   // use synchronous?
+uint8_t mp3_status;
+uint8_t requested_music;
 
+#define TRACK_MAGNEGE1 6
+#define TRACK_MAGNEGE2 7
+#define TRACK_MAGNEGE3 8
+#define TRACK_MAGNEGE4 9
+#define TRACK_MAGNEGE5 10
+#define TRACK_MAGNEGE6 11
+
+#define MP3_DEFAULT 1 // Default track to play ...
 // Define 3 I2C extender
 #define NB_I2C_PORT 4
 I2c_Port i2c_ports[NB_I2C_PORT]= {I2c_Port(0x20), I2c_Port(0x21), I2c_Port(0x22), I2c_Port(0x23)};
@@ -113,10 +123,7 @@ CRGB leds5[NUM_LEDS5];
 CRGB leds6[NUM_LEDS6];
 //CRGB leds7[NUM_LEDS7];
 
-uint8_t mp3_status;
-uint8_t requested_music;
 
-#define MP3_DEFAULT 1 // Default track to play ...
 
 uint32_t current_time;
 
@@ -133,6 +140,8 @@ void setup() {
 
 	pinMode(CURRENT_DETECT, INPUT);           // set pin to input for current detector
 	digitalWrite(CURRENT_DETECT, HIGH);       // turn on pullup resistors
+
+	delay(2000);
 
 	Serial.begin(230400);
 	timer3.end();
@@ -292,6 +301,57 @@ void loop() {
 //		Serial.println(i);
 		i2c_ports[i].read_i2c();
 		i2c_ports[i].write_i2c();
+	}
+	// Simulate Button Press with character received over Serial
+	if (Serial.available() > 0) {
+		// read the incoming byte:
+		i = Serial.read();
+		switch (i) {
+		case '1':
+			i2c_ports[1].read_value &= 0xfe; // Button 1 pressed
+			break;
+		case '2':
+			i2c_ports[1].read_value &= 0xfd; // Button 2 pressed
+			break;
+		case '3':
+			i2c_ports[1].read_value &= 0xfb; // Button 3 pressed
+			break;
+		case '4':
+			i2c_ports[1].read_value &= 0xf7; // Button 4 pressed
+			break;
+		case '5':
+			i2c_ports[1].read_value &= 0xef; // Button 5 pressed
+			break;
+		case '6':
+			i2c_ports[2].read_value &= 0xfe; // Button 6 pressed
+			break;
+		case '7':
+			i2c_ports[2].read_value &= 0xfd; // Button 7 pressed
+			break;
+		case '8':
+			i2c_ports[2].read_value &= 0xfb; // Button 8 pressed
+			break;
+		case '9':
+			i2c_ports[2].read_value &= 0xf7; // Button 9 pressed
+			break;
+		case '0':
+			i2c_ports[2].read_value &= 0xef; // Button 10 pressed
+			break;
+		case 'A':
+			i2c_ports[3].read_value &= 0xfe; // Button 0 pressed
+			break;
+		case 'B':
+			i2c_ports[3].read_value &= 0xfd; // Button 0 pressed
+			break;
+		case 'C':
+			i2c_ports[3].read_value &= 0xfb; // Button 0 pressed
+			break;
+		case 'D':
+			i2c_ports[3].read_value &= 0xf7; // Button 0 pressed
+			break;
+		default:
+			break;
+		}
 	}
 	FastLED.show();
 

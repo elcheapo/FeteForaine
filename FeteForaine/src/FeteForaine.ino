@@ -24,7 +24,7 @@
 #define NUM_LEDS3 26
 // Grande roue droite
 #define NUM_LEDS4 26
-// Petit bandeau - 40 ?
+// Petit bandeau - 57
 #define NUM_LEDS5 57
 // Grand bandeau 144
 #define NUM_LEDS6 144
@@ -46,6 +46,13 @@
 #define DATA_PIN5 26
 #define DATA_PIN6 27
 //#define DATA_PIN7 28
+
+// 22 : Couroune derriere la grande roue + Grande roue droite
+// 23 : grande roue gauche
+// 24 : ?
+// 25 : ? 
+// 26 : ?
+// 27 : 
 
 // define which button control which manège
 #define B_MANEGE1 10
@@ -70,7 +77,7 @@
 #define OP_BUTTON3 32
 #define OP_BUTTON4 33
 
-#define MANEGE_DURATION 30000
+#define MANEGE_DURATION 180000
 
 #define HIGH_VOLUME 30
 #define MID_VOLUME 15
@@ -193,24 +200,28 @@ void setup() {
 
     delay(2000);
 
-    for( uint16_t i=0; i<NUM_LEDS1; i++) {
-    	leds1[i] = CRGB::Black;
+    for( uint16_t i=0; i<NUM_LEDS6; i++) {
+    	leds6[i] = CRGB::Blue;
     }
+#if 0
  	for( uint16_t i=0; i<NUM_LEDS2; i++) {
-  	  leds2[i] = CRGB::Black;
+  	  leds2[i] = CRGB::Red;
   	}
     for( uint16_t i=0; i<NUM_LEDS3; i++) {
-    	leds3[i] = CRGB::Black;
-    	leds4[i] = CRGB::Black;
+    	leds3[i] = CRGB::Green;
+    	leds4[i] = CRGB::Yellow;
     }
     for( uint16_t i=0; i<NUM_LEDS5; i++) {
-    	leds5[i] = CRGB::Black;
+    	leds5[i] = CRGB::Orange;
     }
     for( uint16_t i=0; i<NUM_LEDS6; i++) {
-    	leds6[i] = CRGB::Black;
+    	leds6[i] = CRGB::Purple;
     }
-
+#endif
  	FastLED.show();
+
+   delay(20000);
+
 
  	current_color = 0;
  	FastLED.setBrightness(0xff);

@@ -17,7 +17,7 @@
 #define CURRENT_DETECT 41
 // How many leds in your strip?
 // Mas de cocagne 24+16, 12
-#define NUM_LEDS1 52
+#define NUM_LEDS1 40
 // Palais des mirages (2) / Palais des glaces (3) + courone grande roue (12)
 #define NUM_LEDS2 15
 // grande roue gauche
@@ -28,6 +28,8 @@
 #define NUM_LEDS5 57
 // Grand bandeau 144
 #define NUM_LEDS6 144
+// Mas de cocagne 2 12
+#define NUM_LEDS7 12
 
 //#define NUM_LEDS7 50
 
@@ -45,7 +47,7 @@
 #define DATA_PIN4 25
 #define DATA_PIN5 26
 #define DATA_PIN6 27
-//#define DATA_PIN7 28
+#define DATA_PIN7 28
 
 // 22 : Couroune derriere la grande roue + Grande roue droite
 // 23 : grande roue gauche
@@ -128,7 +130,7 @@ CRGB leds3[NUM_LEDS3];
 CRGB leds4[NUM_LEDS4];
 CRGB leds5[NUM_LEDS5];
 CRGB leds6[NUM_LEDS6];
-//CRGB leds7[NUM_LEDS7];
+CRGB leds7[NUM_LEDS7];
 
 
 
@@ -143,7 +145,6 @@ void setup() {
 	Wire.begin();
 	Serial.begin(230400);
 
-#if 0
 	// Turn Off Relays
 	Wire.beginTransmission(0x20); // transmit to PCF8574
 	Wire.write(0x00);
@@ -159,7 +160,7 @@ void setup() {
 	mp3.begin();
 	setCallbackMode(bUseCallback);
 	setSynchMode(bUseSynch);
-#endif
+
 	Serial.println(F("\nScanning I2C bus"));
 	for (i=1; i<127; i++) {
 		// scan I2C bus
@@ -176,10 +177,14 @@ void setup() {
     FastLED.addLeds<WS2812B, DATA_PIN1, GRB>(leds1, NUM_LEDS1);
     FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds2, NUM_LEDS2);
     FastLED.addLeds<WS2812B, DATA_PIN3, GRB>(leds3, NUM_LEDS3);
-    FastLED.addLeds<WS2812B, DATA_PIN4, RGB>(leds4, NUM_LEDS4);
-    FastLED.addLeds<WS2812B, DATA_PIN5, RGB>(leds5, NUM_LEDS5);
-    FastLED.addLeds<WS2812B, DATA_PIN6, RGB>(leds6, NUM_LEDS6);
-//    FastLED.addLeds<WS2812B, DATA_PIN7, RGB>(leds7, NUM_LEDS7);
+    FastLED.addLeds<WS2812B, DATA_PIN4, GRB>(leds4, NUM_LEDS4);
+    FastLED.addLeds<WS2812B, DATA_PIN5, GRB>(leds5, NUM_LEDS5);
+    FastLED.addLeds<WS2812B, DATA_PIN6, GRB>(leds6, NUM_LEDS6);
+    FastLED.addLeds<WS2812B, DATA_PIN7, GRB>(leds7, NUM_LEDS7);
+
+	FastLED.showColor(CRGB::Black);
+ 	FastLED.show();
+ 	delay(500);
 
     leds1[0] = CRGB::Red;
     leds1[1] = CRGB::Green;
@@ -199,6 +204,9 @@ void setup() {
     leds6[0] = CRGB::Red;
     leds6[1] = CRGB::Green;
     leds6[2] = CRGB::Blue;
+    leds7[0] = CRGB::Red;
+    leds7[1] = CRGB::Green;
+    leds7[2] = CRGB::Blue;
  	FastLED.show();
 
     delay(2000);

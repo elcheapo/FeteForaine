@@ -139,7 +139,11 @@ uint8_t current_color;
 #include "helpers.h"
 void setup() { 
 	uint8_t i,ret;
+	
 	Wire.begin();
+	Serial.begin(230400);
+
+#if 0
 	// Turn Off Relays
 	Wire.beginTransmission(0x20); // transmit to PCF8574
 	Wire.write(0x00);
@@ -150,13 +154,12 @@ void setup() {
 
 	delay(2000);
 
-	Serial.begin(230400);
 	timer3.end();
 	// MP3 init
 	mp3.begin();
 	setCallbackMode(bUseCallback);
 	setSynchMode(bUseSynch);
-
+#endif
 	Serial.println(F("\nScanning I2C bus"));
 	for (i=1; i<127; i++) {
 		// scan I2C bus

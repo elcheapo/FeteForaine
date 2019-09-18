@@ -87,14 +87,14 @@ return 0;
 scenario led_string11(&init11, &update_led11);
 
 /*********************************************************************************/
-// Mas de cocagne 12 [40..51] / led1
+// Mas de cocagne 12 [0..11] / led7
 
 #define NUM_LEDS12 12
-#define OFFSET12 40
+#define OFFSET12 0
 
 void init12 (uint8_t &cycle){
 	for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i++) {
-		leds1[i] = CRGB::Black;
+		leds7[i] = CRGB::Black;
 	}
 	cycle=0;
 }
@@ -105,15 +105,15 @@ uint32_t update_led12(uint8_t &cycle) {
 		break;
 	case 1:
 		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
-			leds1[i] = CRGB::Red;
-			leds1[i+1] = CRGB::Orange;
+			leds7[i] = CRGB::Red;
+			leds7[i+1] = CRGB::Orange;
 		}
 		cycle = 2;
 		return 1000;
 	default:
 		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
-			leds1[i] = CRGB::Orange;
-			leds1[i+1] = CRGB::Red;
+			leds7[i] = CRGB::Orange;
+			leds7[i+1] = CRGB::Red;
 		}
 		cycle = 1;
 		return 1000;
@@ -341,17 +341,15 @@ void init34 (uint8_t &cycle) {
 }
 void up34_led( uint8_t start) {
 	for  (uint8_t i = 0; i < (2*start); i++) {
-		leds3[i]=CHSV(hue34, 255, 180);
-		leds4[i]=CHSV(hue34, 255, 180);
+		leds3[i]= leds4[i]=CHSV(hue34, 255, 180);
 	}
 	uint8_t j = 0;
 	for (uint8_t i = (2*start); i < 26; i++) {
-		j++;
-		leds3[i]=CHSV(hue34, 255-(4*j), 180);
-		leds4[i]=CHSV(hue34, 255-(4*j), 180);
+		j += 20;
+		leds3[i]= leds4[i]= CHSV(hue34, 255-j, 180);
 	}
 	for (uint8_t i=0; i<NUM_LEDS2-5; i++) {
-		leds2[i+5] = CHSV(hue34, 255-(4*j), 180);
+		leds2[i+5] = CHSV(hue34, 255-j, 180);
 	}
 }
 

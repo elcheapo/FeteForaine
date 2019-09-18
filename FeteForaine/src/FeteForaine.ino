@@ -16,19 +16,19 @@
 
 #define CURRENT_DETECT 41
 // How many leds in your strip?
-// Mas de cocagne 24+16, 12
+// Mas de cocagne 24+16
 #define NUM_LEDS1 40
 // Palais des mirages (2) / Palais des glaces (3) + courone grande roue (12)
 #define NUM_LEDS2 15
-// grande roue gauche
+// grande roue gauche // leds1
 #define NUM_LEDS3 26
-// Grande roue droite
+// Grande roue droite  // leds3
 #define NUM_LEDS4 26
 // Petit bandeau - 57
 #define NUM_LEDS5 57
 // Grand bandeau 144
-#define NUM_LEDS6 144
-// Mas de cocagne 2 12
+#define NUM_LEDS6 144 
+// Mas de cocagne 2 12  // leds4
 #define NUM_LEDS7 12
 
 //#define NUM_LEDS7 50
@@ -41,13 +41,13 @@
 // For led chips like Neopixels, which have a data line, ground, and power, you just
 // need to define DATA_PIN.  For led chipsets that are SPI based (four wires - data, clock,
 // ground, and power), like the LPD8806 define both DATA_PIN and CLOCK_PIN
-#define DATA_PIN1 22
-#define DATA_PIN2 23
-#define DATA_PIN3 24
-#define DATA_PIN4 25
-#define DATA_PIN5 26
-#define DATA_PIN6 27
-#define DATA_PIN7 28
+#define DATA_PIN1 22 // Grande Roue Gauche
+#define DATA_PIN2 23 // Palais glace / mirage
+#define DATA_PIN3 24 // Grande Roue Droite
+#define DATA_PIN4 25 // Petit mas
+#define DATA_PIN5 26 // Grand mas
+#define DATA_PIN6 27 // Bandeau 1
+#define DATA_PIN7 28 // Bandeau 2
 
 // 22 : Couroune derriere la grande roue + Grande roue droite
 // 23 : grande roue gauche
@@ -174,47 +174,106 @@ void setup() {
 	Serial.println(F("Done"));
 
     // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
-    FastLED.addLeds<WS2812B, DATA_PIN1, GRB>(leds1, NUM_LEDS1);
-    FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds2, NUM_LEDS2);
-    FastLED.addLeds<WS2812B, DATA_PIN3, GRB>(leds3, NUM_LEDS3);
-    FastLED.addLeds<WS2812B, DATA_PIN4, GRB>(leds4, NUM_LEDS4);
-    FastLED.addLeds<WS2812B, DATA_PIN5, GRB>(leds5, NUM_LEDS5);
-    FastLED.addLeds<WS2812B, DATA_PIN6, GRB>(leds6, NUM_LEDS6);
-    FastLED.addLeds<WS2812B, DATA_PIN7, GRB>(leds7, NUM_LEDS7);
+    FastLED.addLeds<WS2812B, DATA_PIN5, GRB>(leds1, NUM_LEDS1);  // Mas double (40)
+    FastLED.addLeds<WS2812B, DATA_PIN3, GRB>(leds2, NUM_LEDS2);	 // Palais glace/mirage + courone grande roue 
+    FastLED.addLeds<WS2812B, DATA_PIN2, GRB>(leds3, NUM_LEDS3);  // Grande Roue gauche
+    FastLED.addLeds<WS2812B, DATA_PIN1, GRB>(leds4, NUM_LEDS4);  // Grande Roue droite
+    FastLED.addLeds<WS2812B, DATA_PIN7, GRB>(leds5, NUM_LEDS5);  // petit bandeau
+    FastLED.addLeds<WS2812B, DATA_PIN6, GRB>(leds6, NUM_LEDS6);  // Grand bandeau OK
+    FastLED.addLeds<WS2812B, DATA_PIN4, GRB>(leds7, NUM_LEDS7);  // Petit mas OK
 
-	FastLED.showColor(CRGB::Black);
+	for (uint8_t i=0; i< NUM_LEDS1; i++) {
+		leds1[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS2; i++) {
+		leds2[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS3; i++) {
+		leds3[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS4; i++) {
+		leds4[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS5; i++) {
+		leds5[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS6; i++) {
+		leds6[i] = CRGB::Black;
+	}
+	for (uint8_t i=0; i< NUM_LEDS7; i++) {
+		leds7[i] = CRGB::Black;
+	}
+
+
+
  	FastLED.show();
  	delay(500);
 
     leds1[0] = CRGB::Red;
     leds1[1] = CRGB::Green;
     leds1[2] = CRGB::Blue;
+    leds1[3] = CRGB::White;
+    
     leds2[0] = CRGB::Red;
     leds2[1] = CRGB::Green;
     leds2[2] = CRGB::Blue;
+    leds2[3] = CRGB::White;
+    leds2[4] = CRGB::White;
+    
     leds3[0] = CRGB::Red;
     leds3[1] = CRGB::Green;
     leds3[2] = CRGB::Blue;
+    leds3[3] = CRGB::White;
+    leds3[4] = CRGB::White;
+    leds3[5] = CRGB::White;
+    
     leds4[0] = CRGB::Red;
     leds4[1] = CRGB::Green;
     leds4[2] = CRGB::Blue;
+    leds4[3] = CRGB::White;
+    leds4[4] = CRGB::White;
+    leds4[5] = CRGB::White;
+    leds4[6] = CRGB::White;
+    
     leds5[0] = CRGB::Red;
     leds5[1] = CRGB::Green;
     leds5[2] = CRGB::Blue;
+    leds5[3] = CRGB::White;
+    leds5[4] = CRGB::White;
+    leds5[5] = CRGB::White;
+    leds5[6] = CRGB::White;
+    leds5[7] = CRGB::White;
+    
+    
     leds6[0] = CRGB::Red;
     leds6[1] = CRGB::Green;
     leds6[2] = CRGB::Blue;
+    leds6[3] = CRGB::White;
+    leds6[4] = CRGB::White;
+    leds6[5] = CRGB::White;
+    leds6[6] = CRGB::White;
+    leds6[7] = CRGB::White;
+    leds6[8] = CRGB::White;
+    
     leds7[0] = CRGB::Red;
     leds7[1] = CRGB::Green;
     leds7[2] = CRGB::Blue;
+    leds7[3] = CRGB::White;
+    leds7[4] = CRGB::White;
+    leds7[5] = CRGB::White;
+    leds7[6] = CRGB::White;
+    leds7[7] = CRGB::White;
+    leds7[8] = CRGB::White;
+    leds7[9] = CRGB::White;
+    
  	FastLED.show();
 
-    delay(2000);
+    delay(5000);
 
-    for( uint16_t i=0; i<NUM_LEDS6; i++) {
-    	leds6[i] = CRGB::Blue;
+
+    for( uint16_t i=0; i<NUM_LEDS1; i++) {
+    	leds1[i] = CRGB::Blue;
     }
-#if 0
  	for( uint16_t i=0; i<NUM_LEDS2; i++) {
   	  leds2[i] = CRGB::Red;
   	}
@@ -228,14 +287,17 @@ void setup() {
     for( uint16_t i=0; i<NUM_LEDS6; i++) {
     	leds6[i] = CRGB::Purple;
     }
-#endif
+    for( uint16_t i=0; i<NUM_LEDS7; i++) {
+    	leds7[i] = CRGB::Pink;
+    }
+
  	FastLED.show();
 
-   delay(20000);
+   delay(5000);
 
 
  	current_color = 0;
- 	FastLED.setBrightness(0xff);
+ 	FastLED.setBrightness(0x80);
  	/* Set button as input ports */
  	for( uint16_t i=0; i<5; i++) {
  	 	I2C_pinMode(10+i, INPUT);

@@ -19,19 +19,19 @@
 // Mas de cocagne 24+16
 #define NUM_LEDS1 40
 // Palais des mirages (2) / Palais des glaces (3) + courone grande roue (12)
-#define NUM_LEDS2 15
-// grande roue gauche // leds1
+#define NUM_LEDS2 17
+// grande roue gauche 
 #define NUM_LEDS3 26
-// Grande roue droite  // leds3
+// Grande roue droite 
 #define NUM_LEDS4 26
 // Petit bandeau - 57
-#define NUM_LEDS5 57
+#define NUM_LEDS5 56
 // Grand bandeau 144
 #define NUM_LEDS6 144 
-// Mas de cocagne 2 12  // leds4
+// Mas de cocagne 2 12
 #define NUM_LEDS7 12
 
-//#define NUM_LEDS7 50
+
 
 #define FET1 45
 #define FET2 44
@@ -65,9 +65,9 @@
 #define B_MANEGE5 20
 #define B_WATERPARK 21
 // define relay 
-#define R_MANEGE1 0  
-#define R_MANEGE2 1
-#define R_MANEGE3 2
+#define R_MANEGE1 2  
+#define R_MANEGE2 6
+#define R_MANEGE3 0
 #define R_MANEGE4 3
 #define R_MANEGE5 4
 #define R_WATERPARK 5 
@@ -79,10 +79,10 @@
 #define OP_BUTTON3 32
 #define OP_BUTTON4 33
 
-#define MANEGE_DURATION 180000
+#define MANEGE_DURATION 30000
 
 #define HIGH_VOLUME 30
-#define MID_VOLUME 15
+#define MID_VOLUME 20
 #define LOW_VOLUME 10
 
 MD_YX5300 mp3(0,0);
@@ -268,9 +268,9 @@ void setup() {
     
  	FastLED.show();
 
-    delay(5000);
+    delay(1000);
 
-
+#if 0
     for( uint16_t i=0; i<NUM_LEDS1; i++) {
     	leds1[i] = CRGB::Blue;
     }
@@ -295,9 +295,10 @@ void setup() {
 
    delay(5000);
 
+#endif
 
  	current_color = 0;
- 	FastLED.setBrightness(0x80);
+ 	FastLED.setBrightness(0xFF);
  	/* Set button as input ports */
  	for( uint16_t i=0; i<5; i++) {
  	 	I2C_pinMode(10+i, INPUT);
@@ -308,6 +309,13 @@ void setup() {
  	for (uint8_t i = 0; i < NB_I2C_PORT; i++) {
  		i2c_ports[i].set_input_i2c();
  	}
+	I2C_digitalWrite(R_MANEGE1, LOW);
+	I2C_digitalWrite(R_MANEGE2, LOW);
+	I2C_digitalWrite(R_MANEGE3, LOW);
+	I2C_digitalWrite(R_MANEGE4, LOW);
+	I2C_digitalWrite(R_MANEGE5, LOW);
+	I2C_digitalWrite(R_WATERPARK, LOW);
+	
 
  	current_time=0;
 
@@ -386,6 +394,7 @@ void loop() {
 		i2c_ports[i].read_i2c();
 		i2c_ports[i].write_i2c();
 	}
+#if 0
 	// Simulate Button Press with character received over Serial
 	if (Serial.available() > 0) {
 		// read the incoming byte:
@@ -437,10 +446,11 @@ void loop() {
 			break;
 		}
 	}
+#endif
 	FastLED.show();
 
 	/* end of "background tasks */
-	led_string11.run(led11_cycle);
+	led_string11.run(led11_cycle); // Grand mas de cocagne
 	led_string12.run(led12_cycle);
 	led_string21.run(led21_cycle);
 	led_string22.run(led22_cycle);

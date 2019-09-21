@@ -363,7 +363,7 @@ uint32_t update_led34(uint8_t &cycle) {
 		cycle ++;
 		return 500;
 		break;
-	case 13:
+	case NUM_LEDS3/2:
 		up34_led(cycle);
 		cycle = 1;
 		hue34 += 8;
@@ -387,9 +387,9 @@ void init5(uint8_t &cycle) {
 #define HUE 150
 void up5_led( uint8_t start) {
 	uint8_t i,diff;
-	for( i=0; i<NUM_LEDS3 ; i++) {
+	for( i=0; i<NUM_LEDS5 ; i++) {
 		diff = abs(i-start);
-		leds3[i] = CHSV(HUE-diff,255,200);;
+		leds5[i] = CHSV(HUE-diff,255,200);;
 	}
 }
 
@@ -397,7 +397,7 @@ uint32_t update_led5(uint8_t & cycle) {
 	switch (cycle) {
 	case 0:
 		break;
-	case NUM_LEDS5:
+	case NUM_LEDS7:
 		up5_led(NUM_LEDS5-1);
 		cycle = 1;
 		return 300;
@@ -474,7 +474,7 @@ uint32_t train(uint8_t &cycle) {
 		if (I2C_digitalRead(B_TRAIN) == LOW) {
 			// button pressed, start the train
 			Serial.print('S');
-			speed = 200;
+			speed = 350;
 			timer3.analog_set_speed_and_direction(speed, backward);
 			Serial.println(F("Train starts"));
 			return 3000; // give it time to get out of detection zone
@@ -483,12 +483,16 @@ uint32_t train(uint8_t &cycle) {
 			// button pressed, faster
 			Serial.print('+');
 			speed += 10;
+			Serial.print(F("Speed = "));
+			Serial.println(speed);
 			timer3.analog_set_speed_and_direction(speed, backward);
 		}
 		if (I2C_digitalRead(24) == LOW) {
 			// button pressed, slower
 			Serial.print('-');
 			speed -= 10;
+			Serial.print(F("Speed = "));
+			Serial.println(speed);
 			timer3.analog_set_speed_and_direction(speed, backward);
 		}
 		if ((I2C_digitalRead(23) == LOW) & (I2C_digitalRead(24) == LOW)) {
@@ -499,8 +503,9 @@ uint32_t train(uint8_t &cycle) {
 		}
 		// If train goes in front of station, stop
 		if (digitalRead(CURRENT_DETECT) == LOW) {
-			cycle = 0;
-			return 0;
+			Serial.println(F("Detected"));
+			// Stop Train
+			timer3.analog_set_speed_and_direction(speed,off);
 		}
 		return 200;
 		break;
@@ -532,6 +537,7 @@ uint32_t manege1(uint8_t &cycle) {
 			I2C_digitalWrite(R_MANEGE1, HIGH);
 			requested_music = TRACK_MAGNEGE1;
 			cycle = 2;
+			Serial.println(F("Manège 1"));
 		}
 		return 500;
 		break;
@@ -541,6 +547,7 @@ uint32_t manege1(uint8_t &cycle) {
 	default:
 		cycle = 1;
 		I2C_digitalWrite(R_MANEGE1, LOW);
+		Serial.println(F("Manège 1 OFF"));
 		return 500;
 		break;
 	}
@@ -567,6 +574,7 @@ uint32_t manege2(uint8_t &cycle) {
 			I2C_digitalWrite(R_MANEGE2, HIGH);
 			requested_music = TRACK_MAGNEGE2;
 			cycle = 2;
+			Serial.println(F("Manège 2"));
 		}
 		return 500;
 		break;
@@ -576,6 +584,7 @@ uint32_t manege2(uint8_t &cycle) {
 	default:
 		cycle = 1;
 		I2C_digitalWrite(R_MANEGE2, LOW);
+		Serial.println(F("Manège 2 OFF"));
 		return 500;
 		break;
 	}
@@ -603,6 +612,7 @@ uint32_t manege3(uint8_t &cycle) {
 			I2C_digitalWrite(R_MANEGE3, HIGH);
 			requested_music = TRACK_MAGNEGE3;
 			cycle = 2;
+			Serial.println(F("Manège 3"));
 		}
 		return 500;
 		break;
@@ -612,6 +622,7 @@ uint32_t manege3(uint8_t &cycle) {
 	default:
 		cycle = 1;
 		I2C_digitalWrite(R_MANEGE3, LOW);
+		Serial.println(F("Manège 3 OFF"));
 		return 500;
 		break;
 	}
@@ -639,6 +650,7 @@ uint32_t manege4(uint8_t &cycle) {
 			I2C_digitalWrite(R_MANEGE4, HIGH);
 			requested_music = TRACK_MAGNEGE4;
 			cycle = 2;
+			Serial.println(F("Manège 4"));
 		}
 		return 500;
 		break;
@@ -648,6 +660,7 @@ uint32_t manege4(uint8_t &cycle) {
 	default:
 		cycle = 1;
 		I2C_digitalWrite(R_MANEGE4, LOW);
+		Serial.println(F("Manège 4 OFF"));
 		return 500;
 		break;
 	}
@@ -675,6 +688,7 @@ uint32_t manege5(uint8_t &cycle) {
 			I2C_digitalWrite(R_MANEGE5, HIGH);
 			requested_music = TRACK_MAGNEGE5;
 			cycle = 2;
+			Serial.println(F("Manège 5"));
 		}
 		return 500;
 		break;
@@ -684,6 +698,7 @@ uint32_t manege5(uint8_t &cycle) {
 	default:
 		cycle = 1;
 		I2C_digitalWrite(R_MANEGE5, LOW);
+		Serial.println(F("Manège 5 OFF"));
 		return 500;
 		break;
 	}
@@ -710,6 +725,7 @@ uint32_t manege6(uint8_t &cycle) {
 			I2C_digitalWrite(R_WATERPARK, HIGH);
 			requested_music = TRACK_MAGNEGE6;
 			cycle = 2;
+			Serial.println(F("Manège 6"));
 		}
 		return 500;
 		break;

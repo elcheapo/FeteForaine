@@ -632,7 +632,7 @@ return 0;
 scenario op_manege3(&init_manege3, &manege3);
 
 /*********************************************************************************/
-
+#if 0
 /*********************************************************************************/
 void init_manege4(uint8_t &cycle) {
 	// Turn Off Manège
@@ -668,6 +668,7 @@ return 0;
 }
 
 scenario op_manege4(&init_manege4, &manege4);
+#endif
 
 /*********************************************************************************/
 
@@ -772,7 +773,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		 	op_manege1.disable(manege1_cycle);
 		 	op_manege2.disable(manege2_cycle);
 		 	op_manege3.disable(manege3_cycle);
-		 	op_manege4.disable(manege4_cycle);
+//		 	op_manege4.disable(manege4_cycle);
 		 	op_manege5.disable(manege5_cycle);
 		 	op_manege6.disable(manege6_cycle);
 		 	digitalWrite(FET4, LOW);
@@ -809,7 +810,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 			op_manege1.enable(manege1_cycle);
 			op_manege2.enable(manege2_cycle);
 			op_manege3.enable(manege3_cycle);
-			op_manege4.enable(manege4_cycle);
+//			op_manege4.enable(manege4_cycle);
 			op_manege5.enable(manege5_cycle);
 			op_manege6.enable(manege6_cycle);
 		 	digitalWrite(FET4, HIGH);
@@ -916,7 +917,7 @@ uint32_t run_op3_button(uint8_t &cycle) {
 		 	op_manege1.disable(manege1_cycle);
 		 	op_manege2.disable(manege2_cycle);
 		 	op_manege3.disable(manege3_cycle);
-		 	op_manege4.disable(manege4_cycle);
+//		 	op_manege4.disable(manege4_cycle);
 		 	op_manege5.disable(manege5_cycle);
 		 	op_manege6.disable(manege6_cycle);
 		}
@@ -944,7 +945,7 @@ uint32_t run_op3_button(uint8_t &cycle) {
 			op_manege1.enable(manege1_cycle);
 			op_manege2.enable(manege2_cycle);
 			op_manege3.enable(manege3_cycle);
-			op_manege4.enable(manege4_cycle);
+//			op_manege4.enable(manege4_cycle);
 			op_manege5.enable(manege5_cycle);
 			op_manege6.enable(manege6_cycle);
 			cycle = 5;

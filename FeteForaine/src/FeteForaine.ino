@@ -65,12 +65,12 @@
 #define B_MANEGE5 20
 #define B_WATERPARK 21
 // define relay 
-#define R_MANEGE1 2  
-#define R_MANEGE2 6
-#define R_MANEGE3 0
-#define R_MANEGE4 3
-#define R_MANEGE5 4
-#define R_WATERPARK 5 
+#define R_MANEGE1 6 // Balancelle  
+#define R_MANEGE2 5 // Tour
+#define R_MANEGE3 4 // Grande Roue
+#define R_WATERPARK 1 // Pirates
+#define R_MANEGE5 7 // Chaises
+//#define R_WATERPARK 5 
 
 // Operator buttons on the back
 
@@ -312,7 +312,7 @@ void setup() {
 	I2C_digitalWrite(R_MANEGE1, LOW);
 	I2C_digitalWrite(R_MANEGE2, LOW);
 	I2C_digitalWrite(R_MANEGE3, LOW);
-	I2C_digitalWrite(R_MANEGE4, LOW);
+//	I2C_digitalWrite(R_MANEGE4, LOW);
 	I2C_digitalWrite(R_MANEGE5, LOW);
 	I2C_digitalWrite(R_WATERPARK, LOW);
 	
@@ -330,7 +330,7 @@ void setup() {
  	op_manege1.init(manege1_cycle);
  	op_manege2.init(manege2_cycle);
  	op_manege3.init(manege3_cycle);
- 	op_manege4.init(manege4_cycle);
+// 	op_manege4.init(manege4_cycle);
  	op_manege5.init(manege5_cycle);
  	op_manege6.init(manege6_cycle);
  	op_button1.init(op_button1_cycle);
@@ -350,7 +350,7 @@ void setup() {
  	op_manege1.enable(manege1_cycle);
  	op_manege2.enable(manege2_cycle);
  	op_manege3.enable(manege3_cycle);
- 	op_manege4.enable(manege4_cycle);
+// 	op_manege4.enable(manege4_cycle);
  	op_manege5.enable(manege5_cycle);
  	op_manege6.enable(manege6_cycle);
  	op_button1.enable(op_button1_cycle);
@@ -461,7 +461,7 @@ void loop() {
  	op_manege1.run(manege1_cycle);
  	op_manege2.run(manege2_cycle);
  	op_manege3.run(manege3_cycle);
- 	op_manege4.run(manege4_cycle);
+// 	op_manege4.run(manege4_cycle);
  	op_manege5.run(manege5_cycle);
  	op_manege6.run(manege6_cycle);
  	op_button1.run(op_button1_cycle);

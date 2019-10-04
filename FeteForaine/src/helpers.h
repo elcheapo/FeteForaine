@@ -56,7 +56,7 @@ void init11 (uint8_t &cycle){
 	}
 	cycle=0;
 }
-
+#if 0
 uint32_t update_led11(uint8_t &cycle) {
 	switch (cycle) {
 	case 0:
@@ -83,6 +83,34 @@ uint32_t update_led11(uint8_t &cycle) {
 	}
 return 0;
 }
+#endif
+uint32_t update_led11(uint8_t &cycle) {
+	switch (cycle) {
+	case 0:
+		break;
+	case 1:
+		for (uint8_t i=0; i<NUM_LEDS11; i++) {
+			leds1[i] = CRGB::White;
+		}
+		cycle = 2;
+		return 1000;
+	default:
+		CRGB color;
+		switch (TCNT0 & 0xf) {
+		case 0 ... 4 : color = CRGB::Yellow; break;
+		case 5 ... 10 : color = CRGB::Red; break;
+		case 11 ... 14 : color = CRGB::Orange; break;
+		default : color = CRGB::Blue; break;
+		}
+		for (uint8_t i=0; i<NUM_LEDS11; i++) {
+			leds1[i] = color;
+		}
+		cycle = 1;
+		return 1000;
+		break;
+	}
+return 0;
+}
 
 scenario led_string11(&init11, &update_led11);
 
@@ -104,19 +132,24 @@ uint32_t update_led12(uint8_t &cycle) {
 	case 0:
 		break;
 	case 1:
-		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
+		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i++) {
 			leds7[i] = CRGB::Red;
-			leds7[i+1] = CRGB::Orange;
 		}
 		cycle = 2;
-		return 1000;
+		return 950;
 	default:
-		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i+=2) {
-			leds7[i] = CRGB::Orange;
-			leds7[i+1] = CRGB::Red;
+		CRGB color;
+		switch (TCNT0 & 0xf) {
+		case 0 ... 10 : color = CRGB::Orange; break;
+		case 11 ... 13 : color = CRGB::Yellow; break;
+		case 14 : color = CRGB::Blue; break;
+		default : color = CRGB::Green; break;
+		}
+		for (uint8_t i=OFFSET12; i<OFFSET12+NUM_LEDS12; i++) {
+			leds7[i] = color;
 		}
 		cycle = 1;
-		return 1000;
+		return 950;
 		break;
 	}
 return 0;

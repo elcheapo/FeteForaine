@@ -64,6 +64,7 @@
 #define B_TRAIN   14
 #define B_CHAISES 11 // Chaises
 #define B_WATERPARK 21
+#define B_EMERG 24
 // define relay 
 #define R_BALANCELLE 5 // Balancelle
 #define R_TOUR 4 // Tour

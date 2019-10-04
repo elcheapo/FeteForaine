@@ -512,7 +512,8 @@ uint32_t train(uint8_t &cycle) {
 			Serial.println(F("Train starts"));
 			return 3000; // give it time to get out of detection zone
 		}
-		if (I2C_digitalRead(23) == LOW) {
+
+		if (I2C_digitalRead(OP_BUTTON3) == LOW) {
 			// button pressed, faster
 			Serial.print('+');
 			speed += 10;
@@ -520,7 +521,7 @@ uint32_t train(uint8_t &cycle) {
 			Serial.println(speed);
 			timer3.analog_set_speed_and_direction(speed, backward);
 		}
-		if (I2C_digitalRead(24) == LOW) {
+		if (I2C_digitalRead(OP_BUTTON4) == LOW) {
 			// button pressed, slower
 			Serial.print('-');
 			speed -= 10;
@@ -528,7 +529,7 @@ uint32_t train(uint8_t &cycle) {
 			Serial.println(speed);
 			timer3.analog_set_speed_and_direction(speed, backward);
 		}
-		if ((I2C_digitalRead(23) == LOW) & (I2C_digitalRead(24) == LOW)) {
+		if ((I2C_digitalRead(OP_BUTTON3) == LOW) & (I2C_digitalRead(OP_BUTTON4) == LOW)) {
 			// button pressed, slower
 			Serial.println(F("STOP"));
 			speed = 0;
@@ -793,7 +794,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(B_EMERG) == LOW) {
 		 	led_string11.disable(led11_cycle);
 		 	led_string12.disable(led12_cycle);
 		 	led_string21.disable(led21_cycle);
@@ -815,14 +816,14 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		}
 		return 200;
 	case 2:
-		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+		if (I2C_digitalRead(B_EMERG) == HIGH) {
 			// Button not pressed, wait for a long press to re-enable
 			cycle = 3;
 		}
 		return 200;
 		break;
 	case 3:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(B_EMERG) == LOW) {
 			// Button pressed, wait for a long press to re-enable
 			cycle = 4;
 			return 1000;
@@ -831,7 +832,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		break;
 
 	case 4:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(B_EMERG) == LOW) {
 			// Button still pressed, re-enable everything
 			led_string11.enable(led11_cycle);
 			led_string12.enable(led12_cycle);
@@ -857,7 +858,7 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		break;
 	case 5:
 	default:
-		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+		if (I2C_digitalRead(B_EMERG) == HIGH) {
 			// Button not pressed, go back to state 1
 			cycle = 1;
 		}
@@ -886,7 +887,7 @@ uint32_t run_op2_button(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(OP_BUTTON2) == LOW) {
 		 	led_string5.disable(led5_cycle);
 		 	op_manege6.disable(manege6_cycle);
 		 	Serial.println(F("Operator Button 2 - OFF"));
@@ -894,14 +895,14 @@ uint32_t run_op2_button(uint8_t &cycle) {
 		}
 		return 200;
 	case 2:
-		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+		if (I2C_digitalRead(OP_BUTTON2) == HIGH) {
 			// Button not pressed, wait for a long press to re-enable
 			cycle = 3;
 		}
 		return 200;
 		break;
 	case 3:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(OP_BUTTON2) == LOW) {
 			// Button pressed, wait for a long press to re-enable
 			cycle = 4;
 			return 1000;
@@ -910,7 +911,7 @@ uint32_t run_op2_button(uint8_t &cycle) {
 		break;
 
 	case 4:
-		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
+		if (I2C_digitalRead(OP_BUTTON2) == LOW) {
 			// Button still pressed, re-enable everything
 			led_string5.enable(led5_cycle);
 			op_manege6.enable(manege6_cycle);
@@ -923,7 +924,7 @@ uint32_t run_op2_button(uint8_t &cycle) {
 		break;
 	case 5:
 	default:
-		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
+		if (I2C_digitalRead(OP_BUTTON2) == HIGH) {
 			// Button not pressed, go back to state 1
 			cycle = 1;
 		}

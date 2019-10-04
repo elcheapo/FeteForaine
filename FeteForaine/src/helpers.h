@@ -522,7 +522,7 @@ scenario train_control(&train_init, &train);
 
 void init_manege1(uint8_t &cycle) {
 	// Turn Off Manège
-	I2C_digitalWrite(R_MANEGE1,LOW);
+	I2C_digitalWrite(R_BALANCELLE,LOW);
 	cycle = 0;
 
 }
@@ -533,11 +533,11 @@ uint32_t manege1(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(B_MANEGE1) == LOW) {
-			I2C_digitalWrite(R_MANEGE1, HIGH);
-			requested_music = TRACK_MAGNEGE1;
+		if (I2C_digitalRead(B_BALANCELLE) == LOW) {
+			I2C_digitalWrite(R_BALANCELLE, HIGH);
+			requested_music = TRACK_BALANCELLE;
 			cycle = 2;
-			Serial.println(F("Manège 1"));
+			Serial.println(F("Balancelles"));
 		}
 		return 500;
 		break;
@@ -546,8 +546,8 @@ uint32_t manege1(uint8_t &cycle) {
 		return MANEGE_DURATION;
 	default:
 		cycle = 1;
-		I2C_digitalWrite(R_MANEGE1, LOW);
-		Serial.println(F("Manège 1 OFF"));
+		I2C_digitalWrite(R_BALANCELLE, LOW);
+		Serial.println(F("Balancelles OFF"));
 		return 500;
 		break;
 	}
@@ -560,7 +560,7 @@ scenario op_manege1(&init_manege1,&manege1);
 /*********************************************************************************/
 void init_manege2(uint8_t &cycle) {
 	// Turn Off Manège
-	I2C_digitalWrite(R_MANEGE2,LOW);
+	I2C_digitalWrite(R_TOUR,LOW);
 	cycle = 0;
 
 }
@@ -570,11 +570,11 @@ uint32_t manege2(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(B_MANEGE2) == LOW) {
-			I2C_digitalWrite(R_MANEGE2, HIGH);
-			requested_music = TRACK_MAGNEGE2;
+		if (I2C_digitalRead(B_TOUR) == LOW) {
+			I2C_digitalWrite(R_TOUR, HIGH);
+			requested_music = TRACK_TOUR;
 			cycle = 2;
-			Serial.println(F("Manège 2"));
+			Serial.println(F("Tour"));
 		}
 		return 500;
 		break;
@@ -583,8 +583,8 @@ uint32_t manege2(uint8_t &cycle) {
 		return MANEGE_DURATION;
 	default:
 		cycle = 1;
-		I2C_digitalWrite(R_MANEGE2, LOW);
-		Serial.println(F("Manège 2 OFF"));
+		I2C_digitalWrite(R_TOUR, LOW);
+		Serial.println(F("Tour OFF"));
 		return 500;
 		break;
 	}
@@ -598,7 +598,7 @@ scenario op_manege2(&init_manege2, &manege2);
 /*********************************************************************************/
 void init_manege3(uint8_t &cycle) {
 	// Turn Off Manège
-	I2C_digitalWrite(R_MANEGE3,LOW);
+	I2C_digitalWrite(R_ROUE,LOW);
 	cycle = 0;
 
 }
@@ -608,11 +608,11 @@ uint32_t manege3(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(B_MANEGE3) == LOW) {
-			I2C_digitalWrite(R_MANEGE3, HIGH);
-			requested_music = TRACK_MAGNEGE3;
+		if (I2C_digitalRead(B_ROUE) == LOW) {
+			I2C_digitalWrite(R_ROUE, HIGH);
+			requested_music = TRACK_ROUE;
 			cycle = 2;
-			Serial.println(F("Manège 3"));
+			Serial.println(F("Grande Roue"));
 		}
 		return 500;
 		break;
@@ -621,8 +621,8 @@ uint32_t manege3(uint8_t &cycle) {
 		return MANEGE_DURATION;
 	default:
 		cycle = 1;
-		I2C_digitalWrite(R_MANEGE3, LOW);
-		Serial.println(F("Manège 3 OFF"));
+		I2C_digitalWrite(R_ROUE, LOW);
+		Serial.println(F("Grande Roue Off 3 OFF"));
 		return 500;
 		break;
 	}
@@ -632,11 +632,10 @@ return 0;
 scenario op_manege3(&init_manege3, &manege3);
 
 /*********************************************************************************/
-#if 0
 /*********************************************************************************/
 void init_manege4(uint8_t &cycle) {
 	// Turn Off Manège
-	I2C_digitalWrite(R_MANEGE4,LOW);
+//	I2C_digitalWrite(R_CHEVEAUX,LOW);
 	cycle = 0;
 
 }
@@ -646,11 +645,11 @@ uint32_t manege4(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(B_MANEGE4) == LOW) {
-			I2C_digitalWrite(R_MANEGE4, HIGH);
-			requested_music = TRACK_MAGNEGE4;
+		if (I2C_digitalRead(B_CHEVEAUX) == LOW) {
+//			I2C_digitalWrite(R_CHEVEAUX, HIGH);
+			requested_music = TRACK_CHEVAUX;
 			cycle = 2;
-			Serial.println(F("Manège 4"));
+			Serial.println(F("Petit Cheveaux"));
 		}
 		return 500;
 		break;
@@ -659,8 +658,8 @@ uint32_t manege4(uint8_t &cycle) {
 		return MANEGE_DURATION;
 	default:
 		cycle = 1;
-		I2C_digitalWrite(R_MANEGE4, LOW);
-		Serial.println(F("Manège 4 OFF"));
+//		I2C_digitalWrite(R_CHEVEAUX, LOW);
+		Serial.println(F("Petit Chevaux OFF"));
 		return 500;
 		break;
 	}
@@ -668,14 +667,14 @@ return 0;
 }
 
 scenario op_manege4(&init_manege4, &manege4);
-#endif
+
 
 /*********************************************************************************/
 
 /*********************************************************************************/
 void init_manege5(uint8_t &cycle) {
 	// Turn Off Manège
-	I2C_digitalWrite(R_MANEGE5,LOW);
+	I2C_digitalWrite(R_CHAISES,LOW);
 	cycle = 0;
 
 }
@@ -685,11 +684,11 @@ uint32_t manege5(uint8_t &cycle) {
 		return 0;
 		break;
 	case 1:
-		if (I2C_digitalRead(B_MANEGE5) == LOW) {
-			I2C_digitalWrite(R_MANEGE5, HIGH);
-			requested_music = TRACK_MAGNEGE5;
+		if (I2C_digitalRead(B_CHAISES) == LOW) {
+			I2C_digitalWrite(R_CHAISES, HIGH);
+			requested_music = TRACK_CHAISES;
 			cycle = 2;
-			Serial.println(F("Manège 5"));
+			Serial.println(F("Chaises"));
 		}
 		return 500;
 		break;
@@ -698,8 +697,8 @@ uint32_t manege5(uint8_t &cycle) {
 		return MANEGE_DURATION;
 	default:
 		cycle = 1;
-		I2C_digitalWrite(R_MANEGE5, LOW);
-		Serial.println(F("Manège 5 OFF"));
+		I2C_digitalWrite(R_CHAISES, LOW);
+		Serial.println(F("Chaises OFF"));
 		return 500;
 		break;
 	}
@@ -724,7 +723,7 @@ uint32_t manege6(uint8_t &cycle) {
 	case 1:
 		if (I2C_digitalRead(B_WATERPARK) == LOW) {
 			I2C_digitalWrite(R_WATERPARK, HIGH);
-			requested_music = TRACK_MAGNEGE6;
+			requested_music = TRACK_WATERPARK;
 			cycle = 2;
 			Serial.println(F("Manège 6"));
 		}
@@ -773,12 +772,14 @@ uint32_t run_op1_button(uint8_t &cycle) {
 		 	op_manege1.disable(manege1_cycle);
 		 	op_manege2.disable(manege2_cycle);
 		 	op_manege3.disable(manege3_cycle);
-//		 	op_manege4.disable(manege4_cycle);
+		 	op_manege4.disable(manege4_cycle);
 		 	op_manege5.disable(manege5_cycle);
 		 	op_manege6.disable(manege6_cycle);
 		 	digitalWrite(FET4, LOW);
+		 	stop_request = 1;
+		 	Serial.println(F("Operator Button 1 - OFF"));
+			cycle = 2;
 		}
-		cycle = 2;
 		return 200;
 	case 2:
 		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
@@ -810,10 +811,11 @@ uint32_t run_op1_button(uint8_t &cycle) {
 			op_manege1.enable(manege1_cycle);
 			op_manege2.enable(manege2_cycle);
 			op_manege3.enable(manege3_cycle);
-//			op_manege4.enable(manege4_cycle);
+			op_manege4.enable(manege4_cycle);
 			op_manege5.enable(manege5_cycle);
 			op_manege6.enable(manege6_cycle);
 		 	digitalWrite(FET4, HIGH);
+		 	Serial.println(F("Operator Button 1 - ON"));
 			cycle = 5;
 		} else {
 			cycle = 3;
@@ -854,8 +856,9 @@ uint32_t run_op2_button(uint8_t &cycle) {
 		if (I2C_digitalRead(OP_BUTTON1) == LOW) {
 		 	led_string5.disable(led5_cycle);
 		 	op_manege6.disable(manege6_cycle);
+		 	Serial.println(F("Operator Button 2 - OFF"));
+			cycle = 2;
 		}
-		cycle = 2;
 		return 200;
 	case 2:
 		if (I2C_digitalRead(OP_BUTTON1) == HIGH) {
@@ -878,6 +881,7 @@ uint32_t run_op2_button(uint8_t &cycle) {
 			// Button still pressed, re-enable everything
 			led_string5.enable(led5_cycle);
 			op_manege6.enable(manege6_cycle);
+		 	Serial.println(F("Operator Button 2 - ON"));
 			cycle = 5;
 		} else {
 			cycle = 3;
@@ -917,11 +921,13 @@ uint32_t run_op3_button(uint8_t &cycle) {
 		 	op_manege1.disable(manege1_cycle);
 		 	op_manege2.disable(manege2_cycle);
 		 	op_manege3.disable(manege3_cycle);
-//		 	op_manege4.disable(manege4_cycle);
+		 	op_manege4.disable(manege4_cycle);
 		 	op_manege5.disable(manege5_cycle);
 		 	op_manege6.disable(manege6_cycle);
+		 	Serial.println(F("Operator Button 3 - ON"));
+		 	stop_request = 1;
+			cycle = 2;
 		}
-		cycle = 2;
 		return 200;
 	case 2:
 		if (I2C_digitalRead(OP_BUTTON3) == HIGH) {
@@ -945,9 +951,10 @@ uint32_t run_op3_button(uint8_t &cycle) {
 			op_manege1.enable(manege1_cycle);
 			op_manege2.enable(manege2_cycle);
 			op_manege3.enable(manege3_cycle);
-//			op_manege4.enable(manege4_cycle);
+			op_manege4.enable(manege4_cycle);
 			op_manege5.enable(manege5_cycle);
 			op_manege6.enable(manege6_cycle);
+		 	Serial.println(F("Operator Button 3 - ON"));
 			cycle = 5;
 		} else {
 			cycle = 3;
@@ -993,18 +1000,27 @@ void init_mp3(uint8_t &cycle) {
 	mp3.playStop();
 	mp3_status = 0;
 	requested_music = 0;
+	stop_request = 0;
 }
 
 uint32_t run_mp3(uint8_t &cycle) {
 
 	// 1) if track ended, restart with default track
 	if (mp3_status == MD_YX5300::STS_FILE_END) {
+	 	mp3.volume(MID_VOLUME);
 		mp3.playTrack(MP3_DEFAULT);
+		Serial.println(F("Default music"));
 	}
 	// 2) if somebody wants a specific song, play it ...
 	if (requested_music != 0) {
 		mp3.playTrack(requested_music);
+		Serial.print(F("Track : "));
+		Serial.println(requested_music);
 		requested_music = 0;
+	}
+	if (stop_request != 0) {
+		mp3.playStop();
+		stop_request = 0;
 	}
 	return 100;
 
@@ -1027,10 +1043,10 @@ void cbResponse(const MD_YX5300::cbData *status)
   case MD_YX5300::STS_OK:         Serial.print(F("STS_OK"));         break;
   case MD_YX5300::STS_TIMEOUT:    Serial.print(F("STS_TIMEOUT"));    break;
   case MD_YX5300::STS_VERSION:    Serial.print(F("STS_VERSION"));    break;
-  case MD_YX5300::STS_CHECKSUM:   Serial.print(F("STS_CHECKSUM"));    break;
+  case MD_YX5300::STS_CHECKSUM:   Serial.print(F("STS_CHECKSUM")); mp3_status = MD_YX5300::STS_FILE_END;   break;
   case MD_YX5300::STS_TF_INSERT:  Serial.print(F("STS_TF_INSERT"));  break;
   case MD_YX5300::STS_TF_REMOVE:  Serial.print(F("STS_TF_REMOVE"));  break;
-  case MD_YX5300::STS_ERR_FILE:   Serial.print(F("STS_ERR_FILE"));   break;
+  case MD_YX5300::STS_ERR_FILE:   Serial.print(F("STS_ERR_FILE"));  mp3_status = MD_YX5300::STS_FILE_END;  break;
   case MD_YX5300::STS_ACK_OK:     Serial.print(F("STS_ACK_OK"));     break;
   case MD_YX5300::STS_FILE_END:   Serial.print(F("STS_FILE_END"));   break;
   case MD_YX5300::STS_INIT:       Serial.print(F("STS_INIT"));       break;

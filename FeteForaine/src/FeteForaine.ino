@@ -57,19 +57,19 @@
 // 27 : 
 
 // define which button control which manège
-#define B_MANEGE1 10
-#define B_MANEGE2 11
-#define B_MANEGE3 12
-#define B_MANEGE4 13
+#define B_BALANCELLE 10 // Balancelle
+#define B_TOUR 20 // Tour
+#define B_ROUE 12 // Grande roue
+#define B_CHEVEAUX 13 // Petit chevaux - musique seule
 #define B_TRAIN   14
-#define B_MANEGE5 20
+#define B_CHAISES 11 // Chaises
 #define B_WATERPARK 21
 // define relay 
-#define R_MANEGE1 6 // Balancelle  
-#define R_MANEGE2 5 // Tour
-#define R_MANEGE3 4 // Grande Roue
+#define R_BALANCELLE 5 // Balancelle
+#define R_TOUR 4 // Tour
+#define R_ROUE 3 // Grande Roue
 #define R_WATERPARK 1 // Pirates
-#define R_MANEGE5 7 // Chaises
+#define R_CHAISES 7 // Chaises
 //#define R_WATERPARK 5 
 
 // Operator buttons on the back
@@ -90,13 +90,14 @@ bool bUseCallback = true; // use callbacks?
 bool bUseSynch = false;   // use synchronous?
 uint8_t mp3_status;
 uint8_t requested_music;
+uint8_t stop_request;
 
-#define TRACK_MAGNEGE1 6
-#define TRACK_MAGNEGE2 7
-#define TRACK_MAGNEGE3 8
-#define TRACK_MAGNEGE4 9
-#define TRACK_MAGNEGE5 10
-#define TRACK_MAGNEGE6 11
+#define TRACK_BALANCELLE 4
+#define TRACK_TOUR 2
+#define TRACK_ROUE 6
+#define TRACK_CHEVAUX 8
+#define TRACK_CHAISES 3
+#define TRACK_WATERPARK 5
 
 #define MP3_DEFAULT 1 // Default track to play ...
 // Define 3 I2C extender
@@ -309,11 +310,11 @@ void setup() {
  	for (uint8_t i = 0; i < NB_I2C_PORT; i++) {
  		i2c_ports[i].set_input_i2c();
  	}
-	I2C_digitalWrite(R_MANEGE1, LOW);
-	I2C_digitalWrite(R_MANEGE2, LOW);
-	I2C_digitalWrite(R_MANEGE3, LOW);
-//	I2C_digitalWrite(R_MANEGE4, LOW);
-	I2C_digitalWrite(R_MANEGE5, LOW);
+	I2C_digitalWrite(R_BALANCELLE, LOW);
+	I2C_digitalWrite(R_TOUR, LOW);
+	I2C_digitalWrite(R_ROUE, LOW);
+//	I2C_digitalWrite(R_CHEVEAUX, LOW);
+	I2C_digitalWrite(R_CHAISES, LOW);
 	I2C_digitalWrite(R_WATERPARK, LOW);
 	
 
@@ -330,7 +331,7 @@ void setup() {
  	op_manege1.init(manege1_cycle);
  	op_manege2.init(manege2_cycle);
  	op_manege3.init(manege3_cycle);
-// 	op_manege4.init(manege4_cycle);
+ 	op_manege4.init(manege4_cycle);
  	op_manege5.init(manege5_cycle);
  	op_manege6.init(manege6_cycle);
  	op_button1.init(op_button1_cycle);
@@ -350,7 +351,7 @@ void setup() {
  	op_manege1.enable(manege1_cycle);
  	op_manege2.enable(manege2_cycle);
  	op_manege3.enable(manege3_cycle);
-// 	op_manege4.enable(manege4_cycle);
+ 	op_manege4.enable(manege4_cycle);
  	op_manege5.enable(manege5_cycle);
  	op_manege6.enable(manege6_cycle);
  	op_button1.enable(op_button1_cycle);
@@ -447,6 +448,30 @@ void loop() {
 		}
 	}
 #endif
+	if (Serial.available() > 0) {
+		// read the incoming byte:
+		i = Serial.read();
+		switch (i) {
+		case '1'...'9':
+			requested_music = i-'0';
+			break;
+		case 'A':
+			i2c_ports[3].read_value &= 0xfe; // Button 0 pressed
+			break;
+		case 'B':
+			i2c_ports[3].read_value &= 0xfd; // Button 0 pressed
+			break;
+		case 'C':
+			i2c_ports[3].read_value &= 0xfb; // Button 0 pressed
+			break;
+		case 'D':
+			i2c_ports[3].read_value &= 0xf7; // Button 0 pressed
+			break;
+		default:
+			break;
+		}
+	}
+
 	FastLED.show();
 
 	/* end of "background tasks */
@@ -461,7 +486,7 @@ void loop() {
  	op_manege1.run(manege1_cycle);
  	op_manege2.run(manege2_cycle);
  	op_manege3.run(manege3_cycle);
-// 	op_manege4.run(manege4_cycle);
+ 	op_manege4.run(manege4_cycle);
  	op_manege5.run(manege5_cycle);
  	op_manege6.run(manege6_cycle);
  	op_button1.run(op_button1_cycle);
